@@ -44,3 +44,11 @@ The following packages were added:
   com.unity.textmeshpro@3.0.6
   com.unity.timeline@1.4.8
   com.unity.ugui@1.0.0
+
+=== Sun Nov  7 09:54:54 2021
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were 更新済:
+  com.unity.ide.vscode をバージョン 1.2.3 から 1.2.4 へ

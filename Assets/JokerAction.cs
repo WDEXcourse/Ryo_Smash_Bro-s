@@ -13,11 +13,17 @@ public class JokerAction : MonoBehaviour
     [SerializeField]
     private float JumpPower = 0;
     [SerializeField]
+    private float ShortJumpPower = 0;
+    [SerializeField]
     private float GravityPower = 0;
+    private Animator anim;
+    private AnimatorStateInfor stateInfor;
+    bool pushAD;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -45,7 +51,7 @@ public class JokerAction : MonoBehaviour
             Debug.Log(pushTime);
             if (pushTime <= 0.1f)
             {
-                rb.AddForce(Vector3.up * JumpPower * 0.5f, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
                 Debug.Log("小ジャンプ");
             }
             else
@@ -58,6 +64,8 @@ public class JokerAction : MonoBehaviour
             pushTime = 0;
         }
 
+        pushAD = (Input.GetKey(KeyCode, A)) || (Input.GetKey(KeyCode, D));
+        anim.SetBool("Running");
     }
 
     private void FixedUpdate()

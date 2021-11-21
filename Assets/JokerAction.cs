@@ -17,8 +17,9 @@ public class JokerAction : MonoBehaviour
     [SerializeField]
     private float GravityPower = 0;
     private Animator anim;
-    private AnimatorStateInfor stateInfor;
+    private AnimatorStateInfo stateInfor;
     bool pushAD;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -64,8 +65,9 @@ public class JokerAction : MonoBehaviour
             pushTime = 0;
         }
 
-        pushAD = (Input.GetKey(KeyCode, A)) || (Input.GetKey(KeyCode, D));
-        anim.SetBool("Running");
+        pushAD = (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.D));
+        anim.SetBool("isRunning",pushAD);
+        Debug.Log(pushAD);
     }
 
     private void FixedUpdate()

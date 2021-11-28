@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class JudgePlatform : MonoBehaviour
 {
+    private Rigidbody rb;
+    public GameObject Receiver;
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -15,9 +17,18 @@ public class JudgePlatform : MonoBehaviour
     {
         
     }
-
-    public void IsTrigger()
+    public void OnTriggerStay(Collider other)
     {
-        GetComponent<BoxCollider>().isTrigger = true;
+        if (other.gameObject.tag == "Player")
+        {
+            Receiver.SendMessage("IsTrigger");
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            Receiver.SendMessage("NotIsTrigger");
+        }
     }
 }

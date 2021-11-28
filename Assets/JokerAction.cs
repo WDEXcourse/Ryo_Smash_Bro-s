@@ -81,6 +81,11 @@ public class JokerAction : MonoBehaviour
         {
             JumpCount = 0;
         }
+
+        if (collision.gameObject.tag == "OnthePlatform" && Input.GetKey(KeyCode.S))
+        {
+            transform.position = new Vector3(0, 1, 0);
+        }
     }
     private void OnCollisionExit(Collision collision)
     {

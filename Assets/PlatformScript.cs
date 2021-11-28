@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class PlatformScript : MonoBehaviour
 {
-    private Rigidbody rb;
-    public GameObject Receiver;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -17,11 +15,14 @@ public class PlatformScript : MonoBehaviour
     {
         
     }
-    public void OnTriggerEnter(Collider other)
+
+    public void IsTrigger()
     {
-        if (other.gameObject.tag == "Player")
-        {
-            Receiver.SendMessage("IsTrigger");
-        }
+        GetComponent<BoxCollider>().isTrigger = true;
+    }
+
+    public void NotIsTrigger()
+    {
+        GetComponent<BoxCollider>().isTrigger = false;
     }
 }

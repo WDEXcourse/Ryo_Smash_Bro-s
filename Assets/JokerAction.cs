@@ -19,7 +19,11 @@ public class JokerAction : MonoBehaviour
     private Animator anim;
     private AnimatorStateInfo stateInfor;
     bool pushAD;
-    
+    public GameObject Receiver1;
+    public GameObject Receiver2;
+    public GameObject Receiver3;
+    bool downInput;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +34,11 @@ public class JokerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            downInput = true;
+        }
+
         if (Input.GetKey(KeyCode.A))
         {
             transform.rotation = Quaternion.Euler(0, -90, 0);
@@ -82,16 +90,82 @@ public class JokerAction : MonoBehaviour
             JumpCount = 0;
         }
 
-        if (collision.gameObject.tag == "OnthePlatform" && Input.GetKey(KeyCode.S))
+        if (collision.gameObject.tag == "Platform1")
         {
-            transform.position = new Vector3(0, 1, 0);
+            JumpCount = 0;
+        }
+
+        if (collision.gameObject.tag == "Platform2")
+        {
+            JumpCount = 0;
+        }
+
+        if (collision.gameObject.tag == "Platform3")
+        {
+            JumpCount = 0;
         }
     }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "Platform1" && downInput == true)
+        {
+            Debug.Log("S");
+            Receiver1.SendMessage("IsTrigger");
+            downInput = false;
+        }
+
+        if (collision.gameObject.tag == "Platform2" && downInput == true)
+        {
+            Receiver2.SendMessage("IsTrigger");
+            downInput = false;
+        }
+
+        if (collision.gameObject.tag == "Platform3" && downInput == true)
+        {
+            Receiver3.SendMessage("IsTrigger");
+            downInput = false;
+        }
+    }
+
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
         {
             JumpCount = 1;
+        }
+
+        if (collision.gameObject.tag == "Platform1")
+        {
+            JumpCount = 1;
+        }
+
+        if (collision.gameObject.tag == "Platform2")
+        {
+            JumpCount = 1;
+        }
+
+        if (collision.gameObject.tag == "Platform3")
+        {
+            JumpCount = 1;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Platform1")
+        {
+            Receiver1.SendMessage("NotIsTrigger");
+        }
+
+        if (other.gameObject.tag == "Platform2")
+        {
+            Receiver2.SendMessage("NotIsTrigger");
+        }
+
+        if (other.gameObject.tag == "Platform3")
+        {
+            Receiver3.SendMessage("NotIsTrigger");
         }
     }
 }

@@ -2004,3 +2004,4 @@ Received Import Request.
 Start importing Assets/blender/Stickman.zip using Guid(0c07c1bd28d3d419a953cebb51580fb2) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '3278b28c0ab2f07bab6e8bf74f2e11d3') in 0.280910 seconds 
   Import took 0.287636 seconds .
 
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class JokerAction : MonoBehaviour
 {
+    public float startPos;
     private float pushTime;
     private Rigidbody rb;
     [SerializeField]
@@ -15,6 +16,8 @@ public class JokerAction : MonoBehaviour
     [SerializeField]
     private float ShortJumpPower = 0;
     [SerializeField]
+    private float AirJumpPower = 0;
+    [SerializeField]
     private float GravityPower = 0;
     private Animator anim;
     private AnimatorStateInfo stateInfor;
@@ -24,11 +27,13 @@ public class JokerAction : MonoBehaviour
     public GameObject Receiver3;
     bool downInput;
 
+
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        transform.position = new Vector3(-41.4355f, 26.119f, 0);
     }
 
     // Update is called once per frame
@@ -55,7 +60,7 @@ public class JokerAction : MonoBehaviour
         {
             pushTime+=Time.deltaTime;
         }
-        else if (JumpCount <= 1 && Input.GetKeyUp(KeyCode.W))
+        else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.W))
         {
             Debug.Log(pushTime);
             if (pushTime <= 0.1f)
@@ -73,9 +78,17 @@ public class JokerAction : MonoBehaviour
             pushTime = 0;
         }
 
-        pushAD = (Input.GetKey(KeyCode.A)) || (Input.GetKey(KeyCode.D));
-        anim.SetBool("isRunning",pushAD);
-        Debug.Log(pushAD);
+        if (JumpCount >= 1 && Input.GetKeyDown(KeyCode.W))
+        {
+            rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+            Debug.Log("空中ジャンプ");
+        }
+
+        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
+        {
+            anim.SetBool("isRunning", true);
+            Debug.Log(pushAD);
+        }
     }
 
     private void FixedUpdate()

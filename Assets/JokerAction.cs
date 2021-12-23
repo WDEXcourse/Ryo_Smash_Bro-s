@@ -31,6 +31,7 @@ public class JokerAction : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("1");
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         transform.position = new Vector3(-41.4355f, 26.119f, 0);
@@ -48,13 +49,25 @@ public class JokerAction : MonoBehaviour
         {
             transform.rotation = Quaternion.Euler(0, -90, 0);
             transform.position += new Vector3(-10 * MoveSpeed * Time.deltaTime, 0, 0);
+            anim.SetBool("isRunning", true);
+        }
+        else if (Input.GetKeyUp(KeyCode.A))
+        {
+            anim.SetBool("isRunning", false);
         }
 
         if (Input.GetKey(KeyCode.D))
         {
             transform.rotation = Quaternion.Euler(0, 90, 0);
             transform.position += new Vector3(10 * MoveSpeed * Time.deltaTime, 0, 0);
+            anim.SetBool("isRunning", true);
         }
+        else if (Input.GetKeyUp(KeyCode.D))
+        {
+            anim.SetBool("isRunning", false);
+        }
+
+
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -82,12 +95,6 @@ public class JokerAction : MonoBehaviour
         {
             rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
             Debug.Log("空中ジャンプ");
-        }
-
-        if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D));
-        {
-            anim.SetBool("isRunning", true);
-            Debug.Log(pushAD);
         }
     }
 

@@ -21,8 +21,8 @@ public class JudgePlatform : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Receiver.SendMessage("UpPower");
-            Debug.Log("up");
+            //Receiver.SendMessage("UpPower");
+            Receiver.SendMessage("IsTrigger");
         }
     }
     public void OnTriggerExit(Collider other)

@@ -95,10 +95,21 @@ public class JokerAction : MonoBehaviour
             pushTime = 0;
         }
 
-        if (JumpCount >= 1 && Input.GetKeyDown(KeyCode.W))
+        if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
         {
             rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
             Debug.Log("空中ジャンプ");
+            JumpCount++;
+        }
+
+        if(transform.position == new Vector3(-80, 3, 0) )//&& transform.rotation.x == 180)
+        {
+            transform.rotation = Quaternion.Euler(0, 180, 0);
+            anim.SetBool("Teeter", true);
+        }
+        else
+        {
+            anim.SetBool("Teeter", false);
         }
     }
 
@@ -134,19 +145,22 @@ public class JokerAction : MonoBehaviour
     {
         if (collision.gameObject.tag == "Platform1" && downInput == true)
         {
-            transform.position -= transform.up*downPower;
+            //transform.position -= transform.up*downPower;
+            Receiver1.SendMessage("IsTrigger");
             downInput = false;
         }
 
         if (collision.gameObject.tag == "Platform2" && downInput == true)
         {
-            transform.position -= transform.up * downPower;
+            //transform.position -= transform.up * downPower;
+            Receiver2.SendMessage("IsTrigger");
             downInput = false;
         }
 
         if (collision.gameObject.tag == "Platform3" && downInput == true)
         {
-            transform.position -= transform.up * downPower;
+            //transform.position -= transform.up * downPower;
+            Receiver3.SendMessage("IsTrigger");
             downInput = false;
         }
     }

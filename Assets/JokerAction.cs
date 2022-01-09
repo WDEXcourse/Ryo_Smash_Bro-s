@@ -8,6 +8,10 @@ public class JokerAction : MonoBehaviour
     private float pushTime;
     private Rigidbody rb;
     [SerializeField]
+    float downPower;
+    [SerializeField]
+    float upPower;
+    [SerializeField]
     int JumpCount = 0;
     [SerializeField]
     private float MoveSpeed = 0;
@@ -130,22 +134,26 @@ public class JokerAction : MonoBehaviour
     {
         if (collision.gameObject.tag == "Platform1" && downInput == true)
         {
-            Debug.Log("S");
-            Receiver1.SendMessage("IsTrigger");
+            transform.position -= transform.up*downPower;
             downInput = false;
         }
 
         if (collision.gameObject.tag == "Platform2" && downInput == true)
         {
-            Receiver2.SendMessage("IsTrigger");
+            transform.position -= transform.up * downPower;
             downInput = false;
         }
 
         if (collision.gameObject.tag == "Platform3" && downInput == true)
         {
-            Receiver3.SendMessage("IsTrigger");
+            transform.position -= transform.up * downPower;
             downInput = false;
         }
+    }
+
+    public void UpPower()
+    {
+        transform.position += transform.up*upPower;
     }
 
     private void OnCollisionExit(Collision collision)

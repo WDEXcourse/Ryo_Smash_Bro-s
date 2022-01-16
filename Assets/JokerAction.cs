@@ -75,7 +75,7 @@ public class JokerAction : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            pushTime+=Time.deltaTime;
+            pushTime += Time.deltaTime;
         }
         else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.W))
         {
@@ -101,26 +101,21 @@ public class JokerAction : MonoBehaviour
             Debug.Log("空中ジャンプ");
             JumpCount++;
         }
-
-        if(transform.position == new Vector3(-80, 3, 0) )//&& transform.rotation.x == 180)
-        {
-            transform.rotation = Quaternion.Euler(0, 180, 0);
-            anim.SetBool("Teeter", true);
-        }
-        else
-        {
-            anim.SetBool("Teeter", false);
-        }
     }
 
     private void FixedUpdate()
     {
-        rb.AddForce(Vector3.down * 9.81f * GravityPower,ForceMode.Acceleration);
+        rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
+        {
+            JumpCount = 0;
+        }
+
+        if (collision.gameObject.tag == "Edge")
         {
             JumpCount = 0;
         }
@@ -165,14 +160,35 @@ public class JokerAction : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "LeftEdge")
+        {
+            Debug.Log("左端");
+            transform.rotation = Quaternion.Euler(0, -90, 0);
+            anim.SetBool("Teeter", true);
+        }
+        else if (other.gameObject.tag == "RightEdge")
+        {
+            transform.rotation = Quaternion.Euler(0, 90, 0);
+            anim.SetBool("Teeter", true);
+        }
+
+    }
+
     public void UpPower()
     {
-        transform.position += transform.up*upPower;
+        transform.position += transform.up * upPower;
     }
 
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
+        {
+            JumpCount = 1;
+        }
+
+        if (collision.gameObject.tag == "Edge")
         {
             JumpCount = 1;
         }
@@ -208,6 +224,15 @@ public class JokerAction : MonoBehaviour
         if (other.gameObject.tag == "Platform3")
         {
             Receiver3.SendMessage("NotIsTrigger");
+        }
+
+        if (other.gameObject.tag == "LeftEdge")
+        {
+            anim.SetBool("Teeter", false);
+        }
+        else if (other.gameObject.tag == "RightEdge")
+        {
+            anim.SetBool("Teeter", false);
         }
     }
 }

@@ -23,7 +23,7 @@ public class JokerAction : MonoBehaviour
     private float AirJumpPower = 0;
     [SerializeField]
     private float GravityPower = 0;
-    private Animator anim;
+    private Animator anim; 
     private AnimatorStateInfo stateInfor;
     bool pushAD;
     public GameObject Receiver1;
@@ -165,7 +165,6 @@ public class JokerAction : MonoBehaviour
         if (other.gameObject.tag == "LeftEdge")
         {
             Debug.Log("左端");
-            transform.rotation = Quaternion.Euler(0, -90, 0);
             anim.SetBool("Teeter", true);
         }
         else if (other.gameObject.tag == "RightEdge")
@@ -184,11 +183,6 @@ public class JokerAction : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
-        {
-            JumpCount = 1;
-        }
-
-        if (collision.gameObject.tag == "Edge")
         {
             JumpCount = 1;
         }

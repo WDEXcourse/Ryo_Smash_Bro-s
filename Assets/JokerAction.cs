@@ -30,6 +30,9 @@ public class JokerAction : MonoBehaviour
     public GameObject Receiver2;
     public GameObject Receiver3;
     bool downInput;
+    private bool MoveStop;
+    private AnimatorStateInfo stateInfo;
+    public GameObject AttackPoint;
 
 
     // Start is called before the first frame update
@@ -39,6 +42,7 @@ public class JokerAction : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         transform.position = new Vector3(-41.4355f, 26.119f, 0);
+        AttackPoint.SetActive(false);
     }
 
     // Update is called once per frame
@@ -71,7 +75,14 @@ public class JokerAction : MonoBehaviour
             anim.SetBool("isRunning", false);
         }
 
-
+        if (Input.GetKey(KeyCode.E))
+        {
+            anim.SetBool("Attack", true);
+        }
+        else
+        {
+            anim.SetBool("Attack", false);
+        }
 
         if (Input.GetKey(KeyCode.W))
         {
@@ -100,6 +111,18 @@ public class JokerAction : MonoBehaviour
             rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
             Debug.Log("空中ジャンプ");
             JumpCount++;
+        }
+
+        stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+        if(stateInfor.IsName("Base Player.Attack"))
+        {
+            MoveStop = true;
+            AttackPoint.SetActive(true);
+        }
+        else
+        {
+            MoveStop = false;
+            AttackPoint.SetActive(false);
         }
     }
 
@@ -162,14 +185,13 @@ public class JokerAction : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "LeftEdge")
+        if (other.gameObject.tag == "LeftEdge")// && transform.rotation == (0, 90, 0))
         {
             Debug.Log("左端");
             anim.SetBool("Teeter", true);
         }
         else if (other.gameObject.tag == "RightEdge")
         {
-            transform.rotation = Quaternion.Euler(0, 90, 0);
             anim.SetBool("Teeter", true);
         }
 

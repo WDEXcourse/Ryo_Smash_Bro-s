@@ -23,7 +23,7 @@ public class JokerAction : MonoBehaviour
     private float AirJumpPower = 0;
     [SerializeField]
     private float GravityPower = 0;
-    private Animator anim; 
+    private Animator anim;
     private AnimatorStateInfo stateInfor;
     bool pushAD;
     public GameObject Receiver1;
@@ -32,7 +32,7 @@ public class JokerAction : MonoBehaviour
     bool downInput;
     private bool MoveStop;
     private AnimatorStateInfo stateInfo;
-    public GameObject AttackPoint;
+    public GameObject HitJudgement;
 
 
     // Start is called before the first frame update
@@ -42,7 +42,7 @@ public class JokerAction : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         transform.position = new Vector3(-41.4355f, 26.119f, 0);
-        AttackPoint.SetActive(false);
+        HitJudgement.SetActive(false);
     }
 
     // Update is called once per frame
@@ -84,6 +84,15 @@ public class JokerAction : MonoBehaviour
             anim.SetBool("Attack", false);
         }
 
+        if (Input.GetKey(KeyCode.Z))
+        {
+            anim.SetBool("Knife1", true);
+        }
+        else
+        {
+            anim.SetBool("Knife1", false);
+        }
+
         if (Input.GetKey(KeyCode.W))
         {
             pushTime += Time.deltaTime;
@@ -114,15 +123,15 @@ public class JokerAction : MonoBehaviour
         }
 
         stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        if(stateInfor.IsName("Base Player.Attack"))
+        if (stateInfor.IsName("KnifeAction1"))
         {
             MoveStop = true;
-            AttackPoint.SetActive(true);
+            HitJudgement.SetActive(true);
         }
         else
         {
             MoveStop = false;
-            AttackPoint.SetActive(false);
+            HitJudgement.SetActive(false);
         }
     }
 

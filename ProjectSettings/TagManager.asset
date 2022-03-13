@@ -12,6 +12,7 @@ TagManager:
   - Platform3
   - LeftEdge
   - RightEdge
+  - HitJudgement
   layers:
   - Default
   - TransparentFX

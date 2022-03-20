@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Action2P : MonoBehaviour
 {
@@ -33,6 +34,8 @@ public class Action2P : MonoBehaviour
     private bool MoveStop;
     private AnimatorStateInfo stateInfo;
     public GameObject HitJudgement;
+    public Text HP;
+    private float PlayerHP;
 
 
     // Start is called before the first frame update
@@ -49,6 +52,7 @@ public class Action2P : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HP.text = PlayerHP.ToString();
         if (MoveStop == false)
         {
             if (Input.GetKeyDown(KeyCode.K))

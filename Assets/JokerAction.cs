@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class JokerAction : MonoBehaviour
 {
     public Vector3 startPos;
@@ -33,6 +33,9 @@ public class JokerAction : MonoBehaviour
     private bool MoveStop;
     private AnimatorStateInfo stateInfo;
     public GameObject HitJudgement;
+    public Text HP;
+    private int PlayerHP;
+    private Collider HitCollider;
 
 
     // Start is called before the first frame update
@@ -48,6 +51,7 @@ public class JokerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HP.text = PlayerHP.ToString();
         if (MoveStop == false)
         {
             if (Input.GetKeyDown(KeyCode.S))
@@ -171,6 +175,14 @@ public class JokerAction : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "HitJudgement")
+        {
+            PlayerHP += 10;
+        }
+    }
+
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Platform1" && downInput == true)
@@ -197,16 +209,15 @@ public class JokerAction : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "LeftEdge")// && transform.rotation == (0, 90, 0))
+        if (other.gameObject.tag == "LeftEdge" && transform.rotation == Quaternion.Euler(0,-90,0))
         {
             Debug.Log("左端");
             anim.SetBool("Teeter", true);
         }
-        else if (other.gameObject.tag == "RightEdge")
+        else if (other.gameObject.tag == "RightEdge" && transform.rotation == Quaternion.Euler(0,90,0))
         {
             anim.SetBool("Teeter", true);
         }
-
     }
 
     public void UpPower()

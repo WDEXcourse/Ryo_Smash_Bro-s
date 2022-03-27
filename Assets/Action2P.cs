@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class Action2P : MonoBehaviour
 {
     public Vector3 startPos;
@@ -35,7 +34,8 @@ public class Action2P : MonoBehaviour
     private AnimatorStateInfo stateInfo;
     public GameObject HitJudgement;
     public Text HP;
-    private float PlayerHP;
+    private int PlayerHP;
+    private Collider HitCollider;
 
 
     // Start is called before the first frame update
@@ -45,7 +45,6 @@ public class Action2P : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         transform.position = startPos;
-        transform.rotation = Quaternion.Euler(0, -90, 0);
         HitJudgement.SetActive(false);
     }
 
@@ -55,29 +54,29 @@ public class Action2P : MonoBehaviour
         HP.text = PlayerHP.ToString();
         if (MoveStop == false)
         {
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.S))
             {
                 downInput = true;
             }
 
-            if (Input.GetKey(KeyCode.J))
+            if (Input.GetKey(KeyCode.A))
             {
                 transform.rotation = Quaternion.Euler(0, -90, 0);
                 transform.position += new Vector3(-10 * MoveSpeed * Time.deltaTime, 0, 0);
                 anim.SetBool("isRunning", true);
             }
-            else if (Input.GetKeyUp(KeyCode.J))
+            else if (Input.GetKeyUp(KeyCode.A))
             {
                 anim.SetBool("isRunning", false);
             }
 
-            if (Input.GetKey(KeyCode.L))
+            if (Input.GetKey(KeyCode.D))
             {
                 transform.rotation = Quaternion.Euler(0, 90, 0);
                 transform.position += new Vector3(10 * MoveSpeed * Time.deltaTime, 0, 0);
                 anim.SetBool("isRunning", true);
             }
-            else if (Input.GetKeyUp(KeyCode.L))
+            else if (Input.GetKeyUp(KeyCode.D))
             {
                 anim.SetBool("isRunning", false);
             }
@@ -92,7 +91,7 @@ public class Action2P : MonoBehaviour
             anim.SetBool("Attack", false);
         }
 
-        if (Input.GetKey(KeyCode.M))
+        if (Input.GetKey(KeyCode.X))
         {
             anim.SetBool("Knife1", true);
         }
@@ -101,11 +100,11 @@ public class Action2P : MonoBehaviour
             anim.SetBool("Knife1", false);
         }
 
-        if (Input.GetKey(KeyCode.I))
+        if (Input.GetKey(KeyCode.W))
         {
             pushTime += Time.deltaTime;
         }
-        else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.I))
+        else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.W))
         {
             Debug.Log(pushTime);
             if (pushTime <= 0.1f)
@@ -123,7 +122,7 @@ public class Action2P : MonoBehaviour
             pushTime = 0;
         }
 
-        if (JumpCount == 1 && Input.GetKeyDown(KeyCode.I))
+        if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
         {
             rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
             Debug.Log("空中ジャンプ");
@@ -176,6 +175,14 @@ public class Action2P : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "HitJudgement")
+        {
+            PlayerHP += 10;
+        }
+    }
+
     private void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.tag == "Platform1" && downInput == true)
@@ -202,16 +209,15 @@ public class Action2P : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "LeftEdge")// && transform.rotation == (0, 90, 0))
+        if (other.gameObject.tag == "LeftEdge" && transform.rotation == Quaternion.Euler(0,-90,0))
         {
             Debug.Log("左端");
             anim.SetBool("Teeter", true);
         }
-        else if (other.gameObject.tag == "RightEdge")
+        else if (other.gameObject.tag == "RightEdge" && transform.rotation == Quaternion.Euler(0,90,0))
         {
             anim.SetBool("Teeter", true);
         }
-
     }
 
     public void UpPower()

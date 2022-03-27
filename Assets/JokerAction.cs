@@ -34,7 +34,8 @@ public class JokerAction : MonoBehaviour
     private AnimatorStateInfo stateInfo;
     public GameObject HitJudgement;
     public Text HP;
-    private int PlayerHP;
+    public Text ShadowHP;
+    private float PlayerHP;
     private Collider HitCollider;
 
 
@@ -52,6 +53,7 @@ public class JokerAction : MonoBehaviour
     void Update()
     {
         HP.text = PlayerHP.ToString();
+        ShadowHP.text = PlayerHP.ToString();
         if (MoveStop == false)
         {
             if (Input.GetKeyDown(KeyCode.S))
@@ -175,11 +177,15 @@ public class JokerAction : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private async void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "HitJudgement")
         {
             PlayerHP += 10;
+            Vector3 KnockBack;
+            float Weight;
+            Weight = (100 + 93 / 200);
+            KnockBack.x = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f;
         }
     }
 

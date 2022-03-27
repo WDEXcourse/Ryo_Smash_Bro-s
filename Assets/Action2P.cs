@@ -34,6 +34,7 @@ public class Action2P : MonoBehaviour
     private AnimatorStateInfo stateInfo;
     public GameObject HitJudgement;
     public Text HP;
+    public Text ShadowHP;
     private int PlayerHP;
     private Collider HitCollider;
 
@@ -46,37 +47,39 @@ public class Action2P : MonoBehaviour
         anim = GetComponent<Animator>();
         transform.position = startPos;
         HitJudgement.SetActive(false);
+        transform.rotation = Quaternion.Euler(0, -90, 0);
     }
 
     // Update is called once per frame
     void Update()
     {
         HP.text = PlayerHP.ToString();
+        ShadowHP.text = PlayerHP.ToString();
         if (MoveStop == false)
         {
-            if (Input.GetKeyDown(KeyCode.S))
+            if (Input.GetKeyDown(KeyCode.K))
             {
                 downInput = true;
             }
 
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.J))
             {
                 transform.rotation = Quaternion.Euler(0, -90, 0);
                 transform.position += new Vector3(-10 * MoveSpeed * Time.deltaTime, 0, 0);
                 anim.SetBool("isRunning", true);
             }
-            else if (Input.GetKeyUp(KeyCode.A))
+            else if (Input.GetKeyUp(KeyCode.J))
             {
                 anim.SetBool("isRunning", false);
             }
 
-            if (Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.L))
             {
                 transform.rotation = Quaternion.Euler(0, 90, 0);
                 transform.position += new Vector3(10 * MoveSpeed * Time.deltaTime, 0, 0);
                 anim.SetBool("isRunning", true);
             }
-            else if (Input.GetKeyUp(KeyCode.D))
+            else if (Input.GetKeyUp(KeyCode.L))
             {
                 anim.SetBool("isRunning", false);
             }
@@ -91,7 +94,7 @@ public class Action2P : MonoBehaviour
             anim.SetBool("Attack", false);
         }
 
-        if (Input.GetKey(KeyCode.X))
+        if (Input.GetKey(KeyCode.M))
         {
             anim.SetBool("Knife1", true);
         }
@@ -100,11 +103,11 @@ public class Action2P : MonoBehaviour
             anim.SetBool("Knife1", false);
         }
 
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKey(KeyCode.I))
         {
             pushTime += Time.deltaTime;
         }
-        else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.W))
+        else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.I))
         {
             Debug.Log(pushTime);
             if (pushTime <= 0.1f)
@@ -122,7 +125,7 @@ public class Action2P : MonoBehaviour
             pushTime = 0;
         }
 
-        if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
+        if (JumpCount == 1 && Input.GetKeyDown(KeyCode.I))
         {
             rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
             Debug.Log("空中ジャンプ");
@@ -180,6 +183,7 @@ public class Action2P : MonoBehaviour
         if(other.gameObject.tag == "HitJudgement")
         {
             PlayerHP += 10;
+            Vector3 KnockBackGrowth;
         }
     }
 

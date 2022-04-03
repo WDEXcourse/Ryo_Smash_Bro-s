@@ -37,6 +37,8 @@ public class JokerAction : MonoBehaviour
     public Text ShadowHP;
     private float PlayerHP;
     private Collider HitCollider;
+    private Vector3 KnockBack;
+    private bool isHit;
 
 
     // Start is called before the first frame update
@@ -82,15 +84,6 @@ public class JokerAction : MonoBehaviour
             {
                 anim.SetBool("isRunning", false);
             }
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            anim.SetBool("Attack", true);
-        }
-        else
-        {
-            anim.SetBool("Attack", false);
         }
 
         if (Input.GetKey(KeyCode.X))
@@ -147,6 +140,12 @@ public class JokerAction : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
+        if(isHit == true)
+        {
+            Debug.Log("isHit");
+            rb.AddForce(KnockBack,ForceMode.Impulse);
+            isHit = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -177,15 +176,22 @@ public class JokerAction : MonoBehaviour
         }
     }
 
-    private async void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(other.gameObject.tag == "HitJudgement")
         {
             PlayerHP += 10;
-            Vector3 KnockBack;
             float Weight;
             Weight = (100 + 93 / 200);
-            KnockBack.x = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f;
+            float KBG;
+
+            KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f * -50000;
+
+            KnockBack = new Vector3(KBG * Mathf.Cos(Mathf.PI / 6) , KBG * Mathf.Sin(Mathf.PI / 6) * -1 , 0);
+            Debug.Log(KnockBack);
+
+            Debug.Log("KB:"+KnockBack);
+            isHit =true;
         }
     }
 

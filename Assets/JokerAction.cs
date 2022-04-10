@@ -39,6 +39,7 @@ public class JokerAction : MonoBehaviour
     private Collider HitCollider;
     private Vector3 KnockBack;
     private bool isHit;
+    public GameObject GamesetText;
 
 
     // Start is called before the first frame update
@@ -49,6 +50,7 @@ public class JokerAction : MonoBehaviour
         anim = GetComponent<Animator>();
         transform.position = startPos;
         HitJudgement.SetActive(false);
+        GamesetText.SetActive(false);
     }
 
     // Update is called once per frame
@@ -134,6 +136,12 @@ public class JokerAction : MonoBehaviour
         {
             MoveStop = false;
             HitJudgement.SetActive(false);
+        }
+
+        if(transform.position.x <= -240 || transform.position.x >= 240 || transform.position.y <= -140 || transform.position.y >= 192)
+        {
+            Destroy(gameObject);
+            GamesetText.SetActive(true);
         }
     }
 

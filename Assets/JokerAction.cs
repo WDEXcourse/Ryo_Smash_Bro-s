@@ -40,12 +40,13 @@ public class JokerAction : MonoBehaviour
     private Vector3 KnockBack;
     private bool isHit;
     public GameObject GamesetText;
+    private bool hitStun;
+    private float hitStunValue;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("1");
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         transform.position = startPos;
@@ -58,7 +59,7 @@ public class JokerAction : MonoBehaviour
     {
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
-        if (MoveStop == false)
+        if (hitStun == false)
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
@@ -86,56 +87,63 @@ public class JokerAction : MonoBehaviour
             {
                 anim.SetBool("isRunning", false);
             }
-        }
 
-        if (Input.GetKey(KeyCode.X))
-        {
-            anim.SetBool("Knife1", true);
-        }
-        else
-        {
-            anim.SetBool("Knife1", false);
-        }
-
-        if (Input.GetKey(KeyCode.W))
-        {
-            pushTime += Time.deltaTime;
-        }
-        else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.W))
-        {
-            Debug.Log(pushTime);
-            if (pushTime <= 0.1f)
+            if (Input.GetKey(KeyCode.X))
             {
-                rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
-                Debug.Log("小ジャンプ");
+                anim.SetBool("Knife1", true);
             }
             else
             {
-                rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                Debug.Log("大ジャンプ");
+                anim.SetBool("Knife1", false);
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                anim.SetBool("isJumping", true);
+            }
+            else
+            {
+                anim.SetBool("isJumping", false);
+            }
+
+            if (Input.GetKey(KeyCode.W))
+            {
+                pushTime += Time.deltaTime;
+            }
+            else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.W))
+            {
+                Debug.Log(pushTime);
+                if (pushTime <= 0.1f)
+                {
+                    rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
+                    Debug.Log("小ジャンプ");
+                }
+                else
+                {
+                    rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                    Debug.Log("大ジャンプ");
+                    pushTime = 0;
+                }
+                JumpCount++;
                 pushTime = 0;
             }
-            JumpCount++;
-            pushTime = 0;
-        }
 
-        if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
-        {
-            rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
-            Debug.Log("空中ジャンプ");
-            JumpCount++;
-        }
+            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
+            {
+                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+                Debug.Log("空中ジャンプ");
+                JumpCount++;
+            }
 
-        stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsName("KnifeAction1"))
-        {
-            MoveStop = true;
-            HitJudgement.SetActive(true);
-        }
-        else
-        {
-            MoveStop = false;
-            HitJudgement.SetActive(false);
+            stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("KnifeAction1"))
+            {
+                HitJudgement.SetActive(true);
+            }
+            else
+            {
+                HitJudgement.SetActive(false);
+            }
         }
 
         if(transform.position.x <= -240 || transform.position.x >= 240 || transform.position.y <= -140 || transform.position.y >= 192)
@@ -200,7 +208,17 @@ public class JokerAction : MonoBehaviour
 
             Debug.Log("KB:"+KnockBack);
             isHit =true;
+            hitStunValue = KBG * 0.4f;
+            StartCoroutine("stunTime");
+            hitStun = true;
+
         }
+    }
+
+    IEnumerator stunTime()
+    {
+        hitStun = true;
+        yield return null;
     }
 
     private void OnCollisionStay(Collision collision)

@@ -35,27 +35,36 @@ public class Action2P : MonoBehaviour
     public GameObject HitJudgement;
     public Text HP;
     public Text ShadowHP;
-    private int PlayerHP;
+    public float PlayerHP;
     private Collider HitCollider;
+    private Vector3 KnockBack;
+    private bool isHit;
+    public GameObject GamesetText;
+    private bool hitStun;
+    private float hitStunValue;
+    public float KBG;
+    float Weight;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("1");
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         transform.position = startPos;
         HitJudgement.SetActive(false);
-        transform.rotation = Quaternion.Euler(0, -90, 0);
+        GamesetText.SetActive(false);
+        Weight = (100 + 93 / 200);
     }
 
     // Update is called once per frame
     void Update()
     {
+        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f * -50000;
+        hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
-        if (MoveStop == false)
+        if (hitStun == false)
         {
             if (Input.GetKeyDown(KeyCode.K))
             {
@@ -83,71 +92,87 @@ public class Action2P : MonoBehaviour
             {
                 anim.SetBool("isRunning", false);
             }
-        }
 
-        if (Input.GetKey(KeyCode.E))
-        {
-            anim.SetBool("Attack", true);
-        }
-        else
-        {
-            anim.SetBool("Attack", false);
-        }
-
-        if (Input.GetKey(KeyCode.M))
-        {
-            anim.SetBool("Knife1", true);
-        }
-        else
-        {
-            anim.SetBool("Knife1", false);
-        }
-
-        if (Input.GetKey(KeyCode.I))
-        {
-            pushTime += Time.deltaTime;
-        }
-        else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.I))
-        {
-            Debug.Log(pushTime);
-            if (pushTime <= 0.1f)
+            if (Input.GetKey(KeyCode.M))
             {
-                rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
-                Debug.Log("小ジャンプ");
+                anim.SetBool("Knife1", true);
             }
             else
             {
-                rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                Debug.Log("大ジャンプ");
+                anim.SetBool("Knife1", false);
+            }
+
+            if (Input.GetKey(KeyCode.I))
+            {
+                anim.SetBool("isJumping", true);
+            }
+            else
+            {
+                anim.SetBool("isJumping", false);
+            }
+
+            if (Input.GetKey(KeyCode.I))
+            {
+                pushTime += Time.deltaTime;
+            }
+            else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.I))
+            {
+                Debug.Log(pushTime);
+                if (pushTime <= 0.1f)
+                {
+                    rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
+                    Debug.Log("小ジャンプ");
+                }
+                else
+                {
+                    rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                    Debug.Log("大ジャンプ");
+                    pushTime = 0;
+                }
+                JumpCount++;
                 pushTime = 0;
             }
-            JumpCount++;
-            pushTime = 0;
+
+            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.I))
+            {
+                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+                Debug.Log("空中ジャンプ");
+                JumpCount++;
+            }
+
+            stateInfo = anim.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("KnifeAction1"))
+            {
+                HitJudgement.SetActive(true);
+            }
+            else
+            {
+                HitJudgement.SetActive(false);
+            }
         }
 
-        if (JumpCount == 1 && Input.GetKeyDown(KeyCode.I))
+        if (hitStun == true)
         {
-            rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
-            Debug.Log("空中ジャンプ");
-            JumpCount++;
+            //ベク変
         }
 
-        stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.IsName("KnifeAction1"))
+        if (transform.position.x <= -240 || transform.position.x >= 240 || transform.position.y <= -140 || transform.position.y >= 192)
         {
-            MoveStop = true;
-            HitJudgement.SetActive(true);
-        }
-        else
-        {
-            MoveStop = false;
-            HitJudgement.SetActive(false);
+            Destroy(gameObject);
+            GamesetText.SetActive(true);
+            Time.timeScale = 0.3f;
         }
     }
 
     private void FixedUpdate()
     {
         rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
+        if (isHit == true)
+        {
+            Debug.Log("isHit");
+            rb.AddForce(KnockBack, ForceMode.Impulse);
+            isHit = false;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -180,11 +205,24 @@ public class Action2P : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "HitJudgement")
+        if (other.gameObject.tag == "HitJudgement")
         {
             PlayerHP += 10;
-            Vector3 KnockBackGrowth;
+
+            KnockBack = new Vector3(KBG * Mathf.Cos(Mathf.PI / 6), KBG * Mathf.Sin(Mathf.PI / 6) * -1, 0);
+
+            Debug.Log("KB:" + KnockBack);
+            isHit = true;
+            StartCoroutine("stunTime");
+
         }
+    }
+
+    IEnumerator stunTime()
+    {
+        hitStun = true;
+        yield return new WaitForSeconds(0.5f);     //1F = 1/60秒
+        hitStun = false;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -213,12 +251,12 @@ public class Action2P : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "LeftEdge" && transform.rotation == Quaternion.Euler(0,-90,0))
+        if (other.gameObject.tag == "LeftEdge" && transform.rotation == Quaternion.Euler(0, -90, 0))
         {
             Debug.Log("左端");
             anim.SetBool("Teeter", true);
         }
-        else if (other.gameObject.tag == "RightEdge" && transform.rotation == Quaternion.Euler(0,90,0))
+        else if (other.gameObject.tag == "RightEdge" && transform.rotation == Quaternion.Euler(0, 90, 0))
         {
             anim.SetBool("Teeter", true);
         }

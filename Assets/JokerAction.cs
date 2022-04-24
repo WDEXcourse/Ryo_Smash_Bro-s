@@ -35,13 +35,15 @@ public class JokerAction : MonoBehaviour
     public GameObject HitJudgement;
     public Text HP;
     public Text ShadowHP;
-    private float PlayerHP;
+    public float PlayerHP;
     private Collider HitCollider;
     private Vector3 KnockBack;
     private bool isHit;
     public GameObject GamesetText;
     private bool hitStun;
     private float hitStunValue;
+    public float KBG;
+    float Weight;
 
 
     // Start is called before the first frame update
@@ -52,11 +54,14 @@ public class JokerAction : MonoBehaviour
         transform.position = startPos;
         HitJudgement.SetActive(false);
         GamesetText.SetActive(false);
+        Weight = (100 + 93 / 200);
     }
 
     // Update is called once per frame
     void Update()
     {
+        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f * -50000;
+        hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
         if (hitStun == false)
@@ -146,10 +151,19 @@ public class JokerAction : MonoBehaviour
             }
         }
 
+        if(hitStun == true)
+        {
+            if (Input.GetKey(KeyCode.A))
+            {
+                //ベク変
+            }
+        }
+
         if(transform.position.x <= -240 || transform.position.x >= 240 || transform.position.y <= -140 || transform.position.y >= 192)
         {
             Destroy(gameObject);
             GamesetText.SetActive(true);
+            Time.timeScale = 0.3f;
         }
     }
 
@@ -197,28 +211,21 @@ public class JokerAction : MonoBehaviour
         if(other.gameObject.tag == "HitJudgement")
         {
             PlayerHP += 10;
-            float Weight;
-            Weight = (100 + 93 / 200);
-            float KBG;
-
-            KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f * -50000;
 
             KnockBack = new Vector3(KBG * Mathf.Cos(Mathf.PI / 6) , KBG * Mathf.Sin(Mathf.PI / 6) * -1 , 0);
-            Debug.Log(KnockBack);
 
             Debug.Log("KB:"+KnockBack);
             isHit =true;
-            hitStunValue = KBG * 0.4f;
             StartCoroutine("stunTime");
-            hitStun = true;
 
         }
     }
-
+    
     IEnumerator stunTime()
     {
         hitStun = true;
-        yield return null;
+        yield return new WaitForSeconds(0.5f);            //1F = 1/60秒
+        hitStun = false;
     }
 
     private void OnCollisionStay(Collision collision)

@@ -669,6 +669,9 @@ MonoBehaviour:
   HitJudgement: {fileID: 2054815503}
   HP: {fileID: 886533736}
   ShadowHP: {fileID: 1221965678}
+  PlayerHP: 0
+  GamesetText: {fileID: 0}
+  KBG: 0
 --- !u!95 &242442461
 Animator:
   serializedVersion: 3
@@ -3206,7 +3209,9 @@ MonoBehaviour:
   HitJudgement: {fileID: 0}
   HP: {fileID: 0}
   ShadowHP: {fileID: 0}
+  PlayerHP: 0
   GamesetText: {fileID: 0}
+  KBG: 0
 --- !u!54 &1890157924
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3495,7 +3500,9 @@ MonoBehaviour:
   HitJudgement: {fileID: 509212786}
   HP: {fileID: 335507175}
   ShadowHP: {fileID: 1985820539}
+  PlayerHP: 999
   GamesetText: {fileID: 1074249189}
+  KBG: 0
 --- !u!95 &2068678208
 Animator:
   serializedVersion: 3

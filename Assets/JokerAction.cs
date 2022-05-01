@@ -41,7 +41,7 @@ public class JokerAction : MonoBehaviour
     private bool isHit;
     public GameObject GamesetText;
     private bool hitStun;
-    private float hitStunValue;
+    public float hitStunValue;
     public float KBG;
     float Weight;
 
@@ -60,7 +60,7 @@ public class JokerAction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f * -50000;
+        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f;
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -212,7 +212,7 @@ public class JokerAction : MonoBehaviour
         {
             PlayerHP += 10;
 
-            KnockBack = new Vector3(KBG * Mathf.Cos(Mathf.PI / 6) , KBG * Mathf.Sin(Mathf.PI / 6) * -1 , 0);
+            KnockBack = new Vector3(KBG * -50000 * Mathf.Cos(Mathf.PI / 6) , KBG * -50000 * Mathf.Sin(Mathf.PI / 6) * -1 , 0);
 
             Debug.Log("KB:"+KnockBack);
             isHit =true;
@@ -223,6 +223,7 @@ public class JokerAction : MonoBehaviour
     
     IEnumerator stunTime()
     {
+        //if(hitStunValue = )
         hitStun = true;
         yield return new WaitForSeconds(0.5f);            //1F = 1/60秒
         hitStun = false;

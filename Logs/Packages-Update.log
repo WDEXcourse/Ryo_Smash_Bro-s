@@ -79,3 +79,12 @@ The following packages were updated:
   com.unity.collab-proxy from version 1.15.7 to 1.15.13
   com.unity.ide.vscode from version 1.2.4 to 1.2.5
   com.unity.test-framework from version 1.1.29 to 1.1.31
+
+=== Sun Sep  4 11:06:16 2022
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were 更新済:
+  com.unity.collab-proxy をバージョン 1.15.13 から 1.15.17 へ
+  com.unity.ide.visualstudio をバージョン 2.0.14 から 2.0.15 へ

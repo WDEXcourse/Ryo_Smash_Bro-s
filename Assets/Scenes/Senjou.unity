@@ -183,9 +183,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9000000, guid: 803d3848a85c5429db4114fd57971480, type: 3}
     - target: {fileID: 5866666021909216657, guid: 803d3848a85c5429db4114fd57971480, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: 803d3848a85c5429db4114fd57971480, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 32a9fd690641b477e9f5cac030730475, type: 2}
+      objectReference: {fileID: 9100000, guid: 0979112767a6e4daa888790b2d5da31e, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 803d3848a85c5429db4114fd57971480, type: 3}
 --- !u!1 &20592327
@@ -3786,10 +3790,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2099299822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f08e6844435b14736a2fd65e4aab1a51, type: 3}
+  m_Script: {fileID: 11500000, guid: 57d28542c50604ba6a6b9e719283976b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 41.43542, y: 26.119, z: 0}
+  startPos: {x: 41.43542, y: 15, z: 0}
   downPower: 25
   upPower: 10
   JumpCount: 0
@@ -3801,9 +3805,9 @@ MonoBehaviour:
   Receiver1: {fileID: 518692678}
   Receiver2: {fileID: 1686822348}
   Receiver3: {fileID: 304278886}
-  HitJudgement: {fileID: 0}
-  HP: {fileID: 886533736}
-  ShadowHP: {fileID: 1221965678}
+  HitJudgement: {fileID: 509212786}
+  HP: {fileID: 335507175}
+  ShadowHP: {fileID: 1985820539}
   PlayerHP: 0
   GamesetText: {fileID: 1074249189}
   hitStunValue: 0

@@ -88,3 +88,16 @@ Update Mode: updateDependencies
 The following packages were 更新済:
   com.unity.collab-proxy をバージョン 1.15.13 から 1.15.17 へ
   com.unity.ide.visualstudio をバージョン 2.0.14 から 2.0.15 へ
+
+=== Sun Nov 27 10:31:29 2022
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were added:
+  com.unity.2d.sprite@1.0.0
+  com.unity.2d.tilemap@1.0.0
+  com.unity.ads@3.7.5
+  com.unity.analytics@3.6.12
+  com.unity.purchasing@4.1.2
+  com.unity.xr.legacyinputhelpers@2.1.8

@@ -93,13 +93,21 @@ public class MarioAction : MonoBehaviour
                 anim.SetBool("MarioDash", false);
             }
 
-            if (Input.GetKey(KeyCode.X))
+            if (Input.GetKeyDown(KeyCode.X))
             {
-                anim.SetBool("Knife1", true);
+                anim.SetBool("jub1", true);
+                if (Input.GetKeyDown(KeyCode.X) && stateInfo.length < 10)
+                {
+                    anim.SetBool("jub2", true);
+                }
+                else
+                {
+                    anim.SetBool("jub2", false);
+                }
             }
             else
             {
-                anim.SetBool("Knife1", false);
+                anim.SetBool("jub1", false);
             }
 
             if (Input.GetKey(KeyCode.W))

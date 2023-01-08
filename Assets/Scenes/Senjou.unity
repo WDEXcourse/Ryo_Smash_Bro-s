@@ -135,12 +135,24 @@ PrefabInstance:
       value: 11
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 803d3848a85c5429db4114fd57971480, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 803d3848a85c5429db4114fd57971480, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 803d3848a85c5429db4114fd57971480, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 803d3848a85c5429db4114fd57971480, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -8.66
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 803d3848a85c5429db4114fd57971480, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8.93
+      value: 19.82
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 803d3848a85c5429db4114fd57971480, type: 3}
       propertyPath: m_LocalPosition.z
@@ -190,6 +202,10 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 0979112767a6e4daa888790b2d5da31e, type: 2}
+    - target: {fileID: 5866666021909216657, guid: 803d3848a85c5429db4114fd57971480, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 803d3848a85c5429db4114fd57971480, type: 3}
 --- !u!1 &20592327
@@ -1434,10 +1450,6 @@ PrefabInstance:
       value: StickmanIdle 1P
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 080fc22921b39444ea89e9ad89bb8110, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 080fc22921b39444ea89e9ad89bb8110, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -1961,7 +1973,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b6e4429d6c6f840228575a2d8e21108c, type: 3}
   m_Name: 
@@ -3798,11 +3810,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startPos: {x: 41.43542, y: 15, z: 0}
-  downPower: 25
+  downPower: 100
   upPower: 10
   JumpCount: 0
   MoveSpeed: 10
-  JumpPower: 10000
+  JumpPower: 50000
   ShortJumpPower: 5000
   AirJumpPower: 11000
   GravityPower: 20

@@ -101,3 +101,12 @@ The following packages were added:
   com.unity.analytics@3.6.12
   com.unity.purchasing@4.1.2
   com.unity.xr.legacyinputhelpers@2.1.8
+
+=== Sun Jan 15 10:05:35 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.purchasing from version 4.1.2 to 4.1.4
+  com.unity.xr.legacyinputhelpers from version 2.1.8 to 2.1.9

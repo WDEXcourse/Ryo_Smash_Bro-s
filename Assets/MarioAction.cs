@@ -158,7 +158,7 @@ public class MarioAction : MonoBehaviour
                 HitJudgement.SetActive(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 anim.SetBool("MarioJub", true);
             }

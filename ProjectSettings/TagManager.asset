@@ -13,6 +13,10 @@ TagManager:
   - LeftEdge
   - RightEdge
   - HitJudgement
+  - MarioJub1Hitbox0
+  - MarioJub1Hitbox1
+  - MarioJub1Hitbox2
+  - MarioJub1Hitbox3
   layers:
   - Default
   - TransparentFX

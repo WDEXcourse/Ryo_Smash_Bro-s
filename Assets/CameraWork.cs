@@ -16,6 +16,6 @@ public class CameraWork : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        this.transform.position = new Vector3((Position1.gameObject.transform.position.x + Position2.gameObject.transform.position.x) / 2, (Position1.gameObject.transform.position.y + Position2.gameObject.transform.position.y) / 2, -1 * keisu * Vector3.Distance(Position1.gameObject.transform.position, Position2.gameObject.transform.position));
+        //this.transform.position = new Vector3((Position1.gameObject.transform.position.x + Position2.gameObject.transform.position.x) / 2, (Position1.gameObject.transform.position.y + Position2.gameObject.transform.position.y) / 2, -1 * keisu * Vector3.Distance(Position1.gameObject.transform.position, Position2.gameObject.transform.position));
     }
 }

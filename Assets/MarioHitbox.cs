@@ -14,10 +14,12 @@ public class MarioHitbox : MonoBehaviour
     public Collider sphereCollider1;
     public Collider sphereCollider2;
     public Collider sphereCollider3;
-    public MeshRenderer mr0;
-    public MeshRenderer mr1;
-    public MeshRenderer mr2;
-    public MeshRenderer mr3;
+    private MeshRenderer mr0;
+    private MeshRenderer mr1;
+    private MeshRenderer mr2;
+    private MeshRenderer mr3;
+    public float KBG;
+    float Weight;
 
     private void Awake()
     {
@@ -53,36 +55,10 @@ public class MarioHitbox : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //AnimatorClipInfo[] clipInfo = anim.GetCurrentAnimatorClipInfo(0);
-        //string clipName = clipInfo[0].clip.name;
-        //Debug.Log(clipName);
-        //Debug.Log(clipInfo[0].clip.length);
-
-        //if (clipInfo[0].clip.length == 1)
-        //{
-        //    sphereCollider0.enabled = true;
-        //    sphereCollider1.enabled = true;
-        //    sphereCollider2.enabled = true;
-        //    sphereCollider3.enabled = true;
-        //    mr0.enabled = true;
-        //    mr1.enabled = true;
-        //    mr2.enabled = true;
-        //    mr3.enabled = true;
-        //    Debug.Log("on");
-        //}
-
-        //if (clipInfo[0].clip.length == 3)
-        //{
-        //    sphereCollider0.enabled = false;
-        //    sphereCollider1.enabled = false;
-        //    sphereCollider2.enabled = false;
-        //    sphereCollider3.enabled = false;
-        //    mr0.enabled = false;
-        //    mr1.enabled = false;
-        //    mr2.enabled = false;
-        //    mr3.enabled = false;
-
-        //}
+        //KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f;
+        //hitStunValue = KBG * 0.4f - 1;
+        //HP.text = PlayerHP.ToString();
+        //ShadowHP.text = PlayerHP.ToString();
     }
 
     void OnMarioJub1Hitbox()
@@ -99,6 +75,19 @@ public class MarioHitbox : MonoBehaviour
     }
 
     void OffMarioJub1Hitbox()
+    {
+        //sphereCollider0.enabled = false;
+        //sphereCollider1.enabled = false;
+        //sphereCollider2.enabled = false;
+        //sphereCollider3.enabled = false;
+        //mr0.enabled = false;
+        //mr1.enabled = false;
+        //mr2.enabled = false;
+        //mr3.enabled = false;
+        //Debug.Log("off");
+    }
+
+    void OffMarioJub1HitboxKari()
     {
         sphereCollider0.enabled = false;
         sphereCollider1.enabled = false;

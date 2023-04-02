@@ -43,7 +43,7 @@ public class MarioAction : MonoBehaviour
     private bool hitStun;
     public float hitStunValue;
     public float KBG;
-    float Weight;
+    float EnemyWeight;
 
 
     // Start is called before the first frame update
@@ -54,13 +54,13 @@ public class MarioAction : MonoBehaviour
         transform.position = startPos;
         HitJudgement.SetActive(false);
         GamesetText.SetActive(false);
-        Weight = (100 + 93 / 200);
+        EnemyWeight = (100 + 93 / 200);
     }
 
     // Update is called once per frame
     void Update()
     {
-        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / Weight * 1.4f + 18) * 0.01f;
+        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / EnemyWeight * 1.4f + 18) * 0.01f;
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -123,20 +123,20 @@ public class MarioAction : MonoBehaviour
             {
                 pushTime += Time.deltaTime;
             }
-            else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.W))
+
+            if (JumpCount < 1 && Input.GetKey(KeyCode.W) && pushTime <= 0.1f)
             {
                 Debug.Log(pushTime);
-                if (pushTime <= 0.1f)
-                {
-                    rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
-                    Debug.Log("小ジャンプ");
-                }
-                else
-                {
-                    rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                    Debug.Log("大ジャンプ");
-                    pushTime = 0;
-                }
+                rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
+                Debug.Log("小ジャンプ");
+                JumpCount++;
+                pushTime = 0;
+            }
+
+            if (JumpCount < 1 && Input.GetKey(KeyCode.W) && pushTime > 0.1f)
+            {
+                rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                Debug.Log("大ジャンプ");
                 JumpCount++;
                 pushTime = 0;
             }
@@ -221,7 +221,7 @@ public class MarioAction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "HitJudgement")
+        if (other.gameObject.tag == "MarioJub1Hitbox0" || other.gameObject.tag == "MarioJub1Hitbox1" || other.gameObject.tag == "MarioJub1Hitbox2" || other.gameObject.tag == "MarioJub1Hitbox3")
         {
             PlayerHP += 10;
 
@@ -230,7 +230,6 @@ public class MarioAction : MonoBehaviour
             Debug.Log("KB:" + KnockBack);
             isHit = true;
             StartCoroutine("stunTime");
-
         }
     }
 

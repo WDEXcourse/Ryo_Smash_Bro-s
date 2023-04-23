@@ -4754,7 +4754,7 @@ CapsuleCollider:
   m_Center: {x: 0, y: 4, z: 0}
 --- !u!95 &1890157927
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4767,10 +4767,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1893968559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4926,10 +4928,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1931762724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57d28542c50604ba6a6b9e719283976b, type: 3}
+  m_Script: {fileID: 11500000, guid: 02998a58b4657488f996f454f9ca5849, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 41.43542, y: 15, z: 0}
+  startPos: {x: 15, y: 41.43542, z: 0}
   downPower: 100
   upPower: 10
   JumpCount: 0
@@ -4937,15 +4939,15 @@ MonoBehaviour:
   JumpPower: 50000
   ShortJumpPower: 5000
   AirJumpPower: 11000
-  GravityPower: 20
+  GravityPower: 100
   Receiver1: {fileID: 518692678}
   Receiver2: {fileID: 1686822348}
   Receiver3: {fileID: 304278886}
   HitJudgement: {fileID: 509212786}
-  HP: {fileID: 335507175}
-  ShadowHP: {fileID: 1985820539}
+  HP: {fileID: 886533736}
+  ShadowHP: {fileID: 1221965678}
   PlayerHP: 0
-  GamesetText: {fileID: 1074249189}
+  GamesetText: {fileID: 0}
   hitStunValue: 0
   KBG: 0
 --- !u!136 &1931762726
@@ -4980,7 +4982,7 @@ Rigidbody:
   m_CollisionDetection: 0
 --- !u!95 &1931762728
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4993,10 +4995,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1931762729
 Transform:
   m_ObjectHideFlags: 0
@@ -5382,7 +5386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068678203}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f08e6844435b14736a2fd65e4aab1a51, type: 3}
   m_Name: 
@@ -5408,7 +5412,7 @@ MonoBehaviour:
   KBG: 0
 --- !u!95 &2068678208
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5421,10 +5425,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2099299823
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5437,7 +5443,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d28542c50604ba6a6b9e719283976b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 15, y: 41.43542, z: 0}
+  startPos: {x: -15, y: 41.43542, z: 0}
   downPower: 100
   upPower: 10
   JumpCount: 0
@@ -6570,7 +6576,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 89.98021, y: 0, z: 0}
 --- !u!95 &5866666021910656416
 Animator:
-  serializedVersion: 3
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6583,10 +6589,12 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5958254283090851494
 GameObject:
   m_ObjectHideFlags: 0

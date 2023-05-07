@@ -66,29 +66,29 @@ public class JokerAction : MonoBehaviour
         ShadowHP.text = PlayerHP.ToString();
         if (hitStun == false)
         {
-            if (Input.GetKeyDown(KeyCode.K))
+            if (Input.GetKeyDown(KeyCode.DownArrow))
             {
                 downInput = true;
             }
 
-            if (Input.GetKey(KeyCode.J))
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
                 transform.rotation = Quaternion.Euler(0, -90, 0);
                 transform.position += new Vector3(-10 * MoveSpeed * Time.deltaTime, 0, 0);
                 anim.SetBool("isRunning", true);
             }
-            else if (Input.GetKeyUp(KeyCode.J))
+            else if (Input.GetKeyUp(KeyCode.LeftArrow))
             {
                 anim.SetBool("isRunning", false);
             }
 
-            if (Input.GetKey(KeyCode.L))
+            if (Input.GetKey(KeyCode.RightArrow))
             {
                 transform.rotation = Quaternion.Euler(0, 90, 0);
                 transform.position += new Vector3(10 * MoveSpeed * Time.deltaTime, 0, 0);
                 anim.SetBool("isRunning", true);
             }
-            else if (Input.GetKeyUp(KeyCode.L))
+            else if (Input.GetKeyUp(KeyCode.RightArrow))
             {
                 anim.SetBool("isRunning", false);
             }
@@ -102,7 +102,7 @@ public class JokerAction : MonoBehaviour
                 anim.SetBool("Knife1", false);
             }
 
-            if (Input.GetKey(KeyCode.I))
+            if (Input.GetKey(KeyCode.UpArrow))
             {
                 anim.SetBool("isJumping", true);
             }
@@ -111,11 +111,11 @@ public class JokerAction : MonoBehaviour
                 anim.SetBool("isJumping", false);
             }
 
-            if (Input.GetKey(KeyCode.I))
+            if (Input.GetKey(KeyCode.UpArrow))
             {
                 pushTime += Time.deltaTime;
             }
-            else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.I))
+            else if (JumpCount < 1 && Input.GetKeyUp(KeyCode.UpArrow))
             {
                 Debug.Log(pushTime);
                 if (pushTime <= 0.1f)
@@ -133,7 +133,7 @@ public class JokerAction : MonoBehaviour
                 pushTime = 0;
             }
 
-            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.I))
+            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.UpArrow))
             {
                 rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
                 Debug.Log("空中ジャンプ");
@@ -208,7 +208,7 @@ public class JokerAction : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "HitJudgement")
+        if(other.gameObject.tag == "MarioJub1Hitbox0" || other.gameObject.tag == "MarioJub1Hitbox1" || other.gameObject.tag == "MarioJub1Hitbox2" || other.gameObject.tag == "MarioJub1Hitbox3")
         {
             PlayerHP += 10;
 

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-public class MarioAction : MonoBehaviour
+public class MarioBasicBehavior : MonoBehaviour
 {
     public Vector3 startPos;
     private float pushTime;
@@ -37,15 +37,14 @@ public class MarioAction : MonoBehaviour
     public Text ShadowHP;
     public float PlayerHP;
     private Collider HitCollider;
-    private Vector3 KnockBack;
     private bool isHit;
     public GameObject GamesetText;
+    public float KBG;
     private bool hitStun;
     public float hitStunValue;
-    public float KBG;
+    private Vector3 KnockBack;
+    float Weight;
     float EnemyWeight;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -54,13 +53,13 @@ public class MarioAction : MonoBehaviour
         transform.position = startPos;
         HitJudgement.SetActive(false);
         GamesetText.SetActive(false);
-        EnemyWeight = (100 + 93 / 200);
+        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / EnemyWeight * 1.4f + 18) * 0.01f;
+        EnemyWeight = (100 + 98 / 200);
     }
 
     // Update is called once per frame
     void Update()
     {
-        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / EnemyWeight * 1.4f + 18) * 0.01f;
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -180,17 +179,6 @@ public class MarioAction : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
-    {
-        rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
-        if (isHit == true)
-        {
-            Debug.Log("isHit");
-            rb.AddForce(KnockBack, ForceMode.Impulse);
-            isHit = false;
-        }
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Ground")
@@ -223,6 +211,7 @@ public class MarioAction : MonoBehaviour
     {
         if (other.gameObject.tag == "MarioJub1Hitbox0" || other.gameObject.tag == "MarioJub1Hitbox1" || other.gameObject.tag == "MarioJub1Hitbox2" || other.gameObject.tag == "MarioJub1Hitbox3")
         {
+            Debug.Log("弱1ヒット");
             PlayerHP += 10;
 
             KnockBack = new Vector3(KBG * -50000 * Mathf.Cos(Mathf.PI / 6), KBG * -50000 * Mathf.Sin(Mathf.PI / 6) * -1, 0);
@@ -230,6 +219,17 @@ public class MarioAction : MonoBehaviour
             Debug.Log("KB:" + KnockBack);
             isHit = true;
             StartCoroutine("stunTime");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
+        if (isHit == true)
+        {
+            Debug.Log("isHit");
+            rb.AddForce(KnockBack, ForceMode.Impulse);
+            isHit = false;
         }
     }
 

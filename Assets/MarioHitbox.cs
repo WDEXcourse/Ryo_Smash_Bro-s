@@ -18,8 +18,7 @@ public class MarioHitbox : MonoBehaviour
     private MeshRenderer mr1;
     private MeshRenderer mr2;
     private MeshRenderer mr3;
-    public float KBG;
-    float Weight;
+
 
     private void Awake()
     {

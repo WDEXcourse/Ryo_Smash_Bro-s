@@ -5386,7 +5386,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068678203}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f08e6844435b14736a2fd65e4aab1a51, type: 3}
   m_Name: 
@@ -5431,37 +5431,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2099299823
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149156361568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 57d28542c50604ba6a6b9e719283976b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startPos: {x: -15, y: 41.43542, z: 0}
-  downPower: 100
-  upPower: 10
-  JumpCount: 0
-  MoveSpeed: 10
-  JumpPower: 50000
-  ShortJumpPower: 5000
-  AirJumpPower: 11000
-  GravityPower: 100
-  Receiver1: {fileID: 518692678}
-  Receiver2: {fileID: 1686822348}
-  Receiver3: {fileID: 304278886}
-  HitJudgement: {fileID: 509212786}
-  HP: {fileID: 335507175}
-  ShadowHP: {fileID: 1985820539}
-  PlayerHP: 0
-  GamesetText: {fileID: 1074249189}
-  hitStunValue: 0
-  KBG: 0
 --- !u!136 &2099299824
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5873,8 +5842,8 @@ GameObject:
   - component: {fileID: 5866666021910656416}
   - component: {fileID: 2099299825}
   - component: {fileID: 2099299824}
-  - component: {fileID: 2099299823}
   - component: {fileID: 919132149156361569}
+  - component: {fileID: 919132149156361570}
   m_Layer: 0
   m_Name: Mario
   m_TagString: Untagged
@@ -5902,7 +5871,37 @@ MonoBehaviour:
   sphereCollider1: {fileID: 1893968561}
   sphereCollider2: {fileID: 1445278592}
   sphereCollider3: {fileID: 1122422535}
+--- !u!114 &919132149156361570
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919132149156361568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57d28542c50604ba6a6b9e719283976b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startPos: {x: -15, y: 41.43542, z: 0}
+  downPower: 25
+  upPower: 10
+  JumpCount: 0
+  MoveSpeed: 10
+  JumpPower: 100000
+  ShortJumpPower: 5000
+  AirJumpPower: 11000
+  GravityPower: 20
+  Receiver1: {fileID: 518692678}
+  Receiver2: {fileID: 1686822348}
+  Receiver3: {fileID: 304278886}
+  HitJudgement: {fileID: 509212786}
+  HP: {fileID: 886533736}
+  ShadowHP: {fileID: 1221965678}
+  PlayerHP: 0
+  GamesetText: {fileID: 1074249189}
   KBG: 0
+  hitStunValue: 0
 --- !u!1 &1045950149638995838
 GameObject:
   m_ObjectHideFlags: 0

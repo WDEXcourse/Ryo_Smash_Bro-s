@@ -4754,7 +4754,7 @@ CapsuleCollider:
   m_Center: {x: 0, y: 4, z: 0}
 --- !u!95 &1890157927
 Animator:
-  serializedVersion: 5
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4767,12 +4767,10 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1893968559
 GameObject:
   m_ObjectHideFlags: 0
@@ -4936,10 +4934,10 @@ MonoBehaviour:
   upPower: 10
   JumpCount: 0
   MoveSpeed: 10
-  JumpPower: 50000
-  ShortJumpPower: 5000
+  JumpPower: 11000
+  ShortJumpPower: 8000
   AirJumpPower: 11000
-  GravityPower: 100
+  GravityPower: 20
   Receiver1: {fileID: 518692678}
   Receiver2: {fileID: 1686822348}
   Receiver3: {fileID: 304278886}
@@ -4948,8 +4946,8 @@ MonoBehaviour:
   ShadowHP: {fileID: 1221965678}
   PlayerHP: 0
   GamesetText: {fileID: 0}
-  hitStunValue: 0
   KBG: 0
+  hitStunValue: 0
 --- !u!136 &1931762726
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4982,7 +4980,7 @@ Rigidbody:
   m_CollisionDetection: 0
 --- !u!95 &1931762728
 Animator:
-  serializedVersion: 5
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -4993,14 +4991,12 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 0979112767a6e4daa888790b2d5da31e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!4 &1931762729
 Transform:
   m_ObjectHideFlags: 0
@@ -5412,7 +5408,7 @@ MonoBehaviour:
   KBG: 0
 --- !u!95 &2068678208
 Animator:
-  serializedVersion: 5
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5425,12 +5421,10 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!136 &2099299824
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5888,8 +5882,8 @@ MonoBehaviour:
   upPower: 10
   JumpCount: 0
   MoveSpeed: 10
-  JumpPower: 5000
-  ShortJumpPower: 5000
+  JumpPower: 11000
+  ShortJumpPower: 8000
   AirJumpPower: 11000
   GravityPower: 20
   Receiver1: {fileID: 518692678}
@@ -6575,7 +6569,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 89.98021, y: 0, z: 0}
 --- !u!95 &5866666021910656416
 Animator:
-  serializedVersion: 5
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6588,12 +6582,10 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5958254283090851494
 GameObject:
   m_ObjectHideFlags: 0

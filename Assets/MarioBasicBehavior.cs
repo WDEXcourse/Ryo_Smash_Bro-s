@@ -123,6 +123,14 @@ public class MarioBasicBehavior : MonoBehaviour
                 pushTime += Time.deltaTime;
             }
 
+            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
+            {
+                rb.velocity = Vector3.zero;
+                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+                Debug.Log("空中ジャンプ");
+                JumpCount++;
+            }
+
             if (JumpCount < 1 && Input.GetKey(KeyCode.W) && pushTime <= 0.1f)
             {
                 Debug.Log(pushTime);
@@ -138,13 +146,6 @@ public class MarioBasicBehavior : MonoBehaviour
                 Debug.Log("大ジャンプ");
                 JumpCount++;
                 pushTime = 0;
-            }
-
-            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
-            {
-                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
-                Debug.Log("空中ジャンプ");
-                JumpCount++;
             }
 
             stateInfo = anim.GetCurrentAnimatorStateInfo(0);

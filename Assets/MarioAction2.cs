@@ -37,15 +37,14 @@ public class MarioAction2 : MonoBehaviour
     public Text ShadowHP;
     public float PlayerHP;
     private Collider HitCollider;
-    private Vector3 KnockBack;
     private bool isHit;
     public GameObject GamesetText;
+    public float KBG;
     private bool hitStun;
     public float hitStunValue;
-    public float KBG;
+    private Vector3 KnockBack;
+    float Weight;
     float EnemyWeight;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -54,13 +53,13 @@ public class MarioAction2 : MonoBehaviour
         transform.position = startPos;
         HitJudgement.SetActive(false);
         GamesetText.SetActive(false);
-        EnemyWeight = (100 + 93 / 200);
+        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / EnemyWeight * 1.4f + 18) * 0.01f;
+        EnemyWeight = (100 + 98 / 200);
     }
 
     // Update is called once per frame
     void Update()
     {
-        KBG = ((0.1f + 10 * 0.05f) * PlayerHP / EnemyWeight * 1.4f + 18) * 0.01f;
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -124,6 +123,14 @@ public class MarioAction2 : MonoBehaviour
                 pushTime += Time.deltaTime;
             }
 
+            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.I))
+            {
+                rb.velocity = Vector3.zero;
+                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+                Debug.Log("空中ジャンプ");
+                JumpCount++;
+            }
+
             if (JumpCount < 1 && Input.GetKey(KeyCode.I) && pushTime <= 0.1f)
             {
                 Debug.Log(pushTime);
@@ -141,13 +148,6 @@ public class MarioAction2 : MonoBehaviour
                 pushTime = 0;
             }
 
-            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.I))
-            {
-                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
-                Debug.Log("空中ジャンプ");
-                JumpCount++;
-            }
-
             stateInfo = anim.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("KnifeAction1"))
             {
@@ -158,7 +158,7 @@ public class MarioAction2 : MonoBehaviour
                 HitJudgement.SetActive(false);
             }
 
-            if (Input.GetKeyDown(KeyCode.RightShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 anim.SetBool("MarioJub", true);
             }
@@ -166,7 +166,7 @@ public class MarioAction2 : MonoBehaviour
 
         if (hitStun == true)
         {
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.J))
             {
                 //ベク変
             }
@@ -177,17 +177,6 @@ public class MarioAction2 : MonoBehaviour
             Destroy(gameObject);
             GamesetText.SetActive(true);
             Time.timeScale = 0.3f;
-        }
-    }
-
-    private void FixedUpdate()
-    {
-        rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
-        if (isHit == true)
-        {
-            Debug.Log("isHit");
-            rb.AddForce(KnockBack, ForceMode.Impulse);
-            isHit = false;
         }
     }
 
@@ -223,13 +212,25 @@ public class MarioAction2 : MonoBehaviour
     {
         if (other.gameObject.tag == "MarioJub1Hitbox0" || other.gameObject.tag == "MarioJub1Hitbox1" || other.gameObject.tag == "MarioJub1Hitbox2" || other.gameObject.tag == "MarioJub1Hitbox3")
         {
+            Debug.Log("弱1ヒット");
             PlayerHP += 10;
 
-            KnockBack = new Vector3(-500 * Mathf.Cos(Mathf.PI / 6), -500 * Mathf.Sin(Mathf.PI / 6) * -1, 0);
+            KnockBack = new Vector3(KBG * -50000 * Mathf.Cos(Mathf.PI / 6), KBG * -50000 * Mathf.Sin(Mathf.PI / 6) * -1, 0);
 
             Debug.Log("KB:" + KnockBack);
             isHit = true;
             StartCoroutine("stunTime");
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
+        if (isHit == true)
+        {
+            Debug.Log("isHit");
+            rb.AddForce(KnockBack, ForceMode.Impulse);
+            isHit = false;
         }
     }
 

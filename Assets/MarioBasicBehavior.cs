@@ -45,6 +45,22 @@ public class MarioBasicBehavior : MonoBehaviour
     private Vector3 KnockBack;
     float Weight;
     float EnemyWeight;
+    [SerializeField]
+    float groundCheckRadius = 0.4f;
+    [SerializeField]
+    float groundCheckOffsetY = 0.45f;
+    [SerializeField]
+    float groundCheckDistance = 0.5f;
+    [SerializeField]
+    LayerMask groundLayers = 0;
+    RaycastHit hit;
+    private bool grounded;
+
+    bool CheckGroundStatus()
+    {
+        return Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -60,6 +76,7 @@ public class MarioBasicBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down*100, Color.red);
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -157,11 +174,6 @@ public class MarioBasicBehavior : MonoBehaviour
             {
                 HitJudgement.SetActive(false);
             }
-
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-                anim.SetBool("MarioJub", true);
-            }
         }
 
         if (hitStun == true)
@@ -225,6 +237,7 @@ public class MarioBasicBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
+        grounded = CheckGroundStatus();
         rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
         if (isHit == true)
         {
@@ -232,6 +245,7 @@ public class MarioBasicBehavior : MonoBehaviour
             rb.AddForce(KnockBack, ForceMode.Impulse);
             isHit = false;
         }
+        Debug.Log("grounded: " + grounded);
     }
 
     IEnumerator stunTime()
@@ -262,6 +276,11 @@ public class MarioBasicBehavior : MonoBehaviour
             //transform.position -= transform.up * downPower;
             Receiver3.SendMessage("IsTrigger");
             downInput = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            anim.SetBool("MarioJub", true);
         }
     }
 

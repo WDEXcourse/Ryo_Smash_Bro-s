@@ -48,7 +48,7 @@ public class MarioBasicBehavior : MonoBehaviour
     [SerializeField]
     float groundCheckRadius = 0.4f;
     [SerializeField]
-    float groundCheckOffsetY = 0.45f;
+    float groundCheckOffsetY = -0.5f;
     [SerializeField]
     float groundCheckDistance = 0.5f;
     [SerializeField]
@@ -76,7 +76,7 @@ public class MarioBasicBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down*100, Color.red);
+        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down* groundCheckDistance, Color.red);
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -124,6 +124,15 @@ public class MarioBasicBehavior : MonoBehaviour
             else
             {
                 anim.SetBool("jub1", false);
+            }
+
+            if(Input.GetKeyDown(KeyCode.Alpha1) && grounded == false)
+            {
+                anim.SetBool("MarioUpAir",true);
+            }
+            else
+            {
+                anim.SetBool("MarioUpAir", false);
             }
 
             if (Input.GetKey(KeyCode.W))
@@ -194,30 +203,30 @@ public class MarioBasicBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            JumpCount = 0;
-        }
+        //if (collision.gameObject.tag == "Ground")
+        //{
+        //    JumpCount = 0;
+        //}
 
-        if (collision.gameObject.tag == "Edge")
-        {
-            JumpCount = 0;
-        }
+        //if (collision.gameObject.tag == "Edge")
+        //{
+        //    JumpCount = 0;
+        //}
 
-        if (collision.gameObject.tag == "Platform1")
-        {
-            JumpCount = 0;
-        }
+        //if (collision.gameObject.tag == "Platform1")
+        //{
+        //    JumpCount = 0;
+        //}
 
-        if (collision.gameObject.tag == "Platform2")
-        {
-            JumpCount = 0;
-        }
+        //if (collision.gameObject.tag == "Platform2")
+        //{
+        //    JumpCount = 0;
+        //}
 
-        if (collision.gameObject.tag == "Platform3")
-        {
-            JumpCount = 0;
-        }
+        //if (collision.gameObject.tag == "Platform3")
+        //{
+        //    JumpCount = 0;
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -246,6 +255,10 @@ public class MarioBasicBehavior : MonoBehaviour
             isHit = false;
         }
         Debug.Log("grounded: " + grounded);
+        if(grounded == true)
+        {
+            JumpCount = 0;
+        }
     }
 
     IEnumerator stunTime()
@@ -282,6 +295,10 @@ public class MarioBasicBehavior : MonoBehaviour
         {
             anim.SetBool("MarioJub", true);
         }
+        else
+        {
+            anim.SetBool("MarioJub", false);
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -304,25 +321,25 @@ public class MarioBasicBehavior : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Ground")
-        {
-            JumpCount = 1;
-        }
+        //if (collision.gameObject.tag == "Ground")
+        //{
+        //    JumpCount = 1;
+        //}
 
-        if (collision.gameObject.tag == "Platform1")
-        {
-            JumpCount = 1;
-        }
+        //if (collision.gameObject.tag == "Platform1")
+        //{
+        //    JumpCount = 1;
+        //}
 
-        if (collision.gameObject.tag == "Platform2")
-        {
-            JumpCount = 1;
-        }
+        //if (collision.gameObject.tag == "Platform2")
+        //{
+        //    JumpCount = 1;
+        //}
 
-        if (collision.gameObject.tag == "Platform3")
-        {
-            JumpCount = 1;
-        }
+        //if (collision.gameObject.tag == "Platform3")
+        //{
+        //    JumpCount = 1;
+        //}
     }
 
     private void OnTriggerExit(Collider other)

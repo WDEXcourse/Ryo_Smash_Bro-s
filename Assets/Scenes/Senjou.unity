@@ -5992,8 +5992,8 @@ MonoBehaviour:
   KBG: 0
   hitStunValue: 0
   groundCheckRadius: 0.4
-  groundCheckOffsetY: 0.45
-  groundCheckDistance: 10
+  groundCheckOffsetY: -12
+  groundCheckDistance: 1
   groundLayers:
     serializedVersion: 2
     m_Bits: 1

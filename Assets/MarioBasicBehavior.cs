@@ -55,6 +55,8 @@ public class MarioBasicBehavior : MonoBehaviour
     LayerMask groundLayers = 0;
     RaycastHit hit;
     private bool grounded;
+    public bool UnderAttack;
+
 
     bool CheckGroundStatus()
     {
@@ -76,11 +78,11 @@ public class MarioBasicBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down* groundCheckDistance, Color.red);
+        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down * groundCheckDistance, Color.red);
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
-        if (hitStun == false)
+        if (hitStun == false && UnderAttack == false)
         {
             if (Input.GetKeyDown(KeyCode.S))
             {
@@ -126,14 +128,18 @@ public class MarioBasicBehavior : MonoBehaviour
                 anim.SetBool("jub1", false);
             }
 
-            if(Input.GetKeyDown(KeyCode.Alpha1) && grounded == false)
+
+            if (Input.GetKeyDown(KeyCode.X) && grounded == false)
             {
-                anim.SetBool("MarioUpAir",true);
+                anim.SetTrigger("TriggerUpAir");
+                //UnderAttack = true;
             }
-            else
-            {
-                anim.SetBool("MarioUpAir", false);
-            }
+            //else
+            //{
+            //    anim.SetTrigger("TriggerUpAir");
+            //    //UnderAttack = false;
+            //}
+
 
             if (Input.GetKey(KeyCode.W))
             {
@@ -255,7 +261,7 @@ public class MarioBasicBehavior : MonoBehaviour
             isHit = false;
         }
         Debug.Log("grounded: " + grounded);
-        if(grounded == true)
+        if (grounded == true)
         {
             JumpCount = 0;
         }

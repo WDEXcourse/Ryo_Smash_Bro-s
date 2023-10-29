@@ -63,6 +63,12 @@ public class MarioBasicBehavior : MonoBehaviour
         return Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
     }
 
+    void OnDrawGizmos()
+    {
+        Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.down, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
+        Gizmos.DrawWireSphere(transform.position + groundCheckOffsetY * Vector3.down, groundCheckRadius);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -110,27 +116,31 @@ public class MarioBasicBehavior : MonoBehaviour
             {
                 anim.SetBool("MarioDash", false);
             }
-
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                anim.SetBool("jub1", true);
-                if (Input.GetKeyDown(KeyCode.X) && stateInfo.length < 10)
-                {
-                    anim.SetBool("jub2", true);
-                }
-                else
-                {
-                    anim.SetBool("jub2", false);
-                }
-            }
-            else
-            {
-                anim.SetBool("jub1", false);
-            }
+            //if(grounded == true)
+            //{
+            //     if (Input.GetKeyDown(KeyCode.X))
+            //     {
+            //         anim.SetBool("jub1", true);
+            //         if (Input.GetKeyDown(KeyCode.X) && stateInfo.length < 10)
+            //         {
+            //             anim.SetBool("jub2", true);
+            //         }
+            //         else
+            //         {
+            //             anim.SetBool("jub2", false);
+            //         }
+            //     }
+            //     else
+            //     {
+            //         anim.SetBool("jub1", false);
+            //     }
+            //}
+            
 
 
             if (Input.GetKeyDown(KeyCode.X) && grounded == false)
             {
+                Debug.Log("yuka:" + grounded);
                 anim.SetTrigger("TriggerUpAir");
                 //UnderAttack = true;
             }

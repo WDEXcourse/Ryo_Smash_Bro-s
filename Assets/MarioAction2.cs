@@ -160,7 +160,11 @@ public class MarioAction2 : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
-                anim.SetBool("MarioJub", true);
+                anim.SetBool("MarioUpAir", true);
+            }
+            else
+            {
+                anim.SetBool("MarioUpAir", false);
             }
         }
 

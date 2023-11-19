@@ -54,6 +54,7 @@ public class MarioBasicBehavior : MonoBehaviour
     [SerializeField]
     LayerMask groundLayers = 0;
     RaycastHit hit;
+    [SerializeField]
     private bool grounded;
     public bool UnderAttack;
 
@@ -140,7 +141,6 @@ public class MarioBasicBehavior : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.X) && grounded == false)
             {
-                Debug.Log("yuka:" + grounded);
                 anim.SetTrigger("TriggerUpAir");
                 //UnderAttack = true;
             }
@@ -169,23 +169,19 @@ public class MarioBasicBehavior : MonoBehaviour
             {
                 rb.velocity = Vector3.zero;
                 rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
-                Debug.Log("空中ジャンプ");
                 JumpCount++;
             }
 
-            if (JumpCount < 1 && Input.GetKey(KeyCode.W) && pushTime <= 0.1f)
+            if (JumpCount == 0 && Input.GetKeyUp(KeyCode.W) && pushTime <= 0.1f)
             {
-                Debug.Log(pushTime);
                 rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
-                Debug.Log("小ジャンプ");
                 JumpCount++;
                 pushTime = 0;
             }
 
-            if (JumpCount < 1 && Input.GetKey(KeyCode.W) && pushTime > 0.1f)
+            if (JumpCount ==0 && Input.GetKeyUp(KeyCode.W) && pushTime > 0.1f)
             {
                 rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                Debug.Log("大ジャンプ");
                 JumpCount++;
                 pushTime = 0;
             }
@@ -270,7 +266,6 @@ public class MarioBasicBehavior : MonoBehaviour
             rb.AddForce(KnockBack, ForceMode.Impulse);
             isHit = false;
         }
-        Debug.Log("grounded: " + grounded);
         if (grounded == true)
         {
             JumpCount = 0;

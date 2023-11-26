@@ -136,7 +136,7 @@ public class MarioBasicBehavior : MonoBehaviour
             //         anim.SetBool("jub1", false);
             //     }
             //}
-            
+
 
 
             if (Input.GetKeyDown(KeyCode.X) && grounded == false)
@@ -163,27 +163,31 @@ public class MarioBasicBehavior : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 pushTime += Time.deltaTime;
+
+                if (JumpCount == 0)
+                {
+                    if (pushTime <= 0.1f)
+                    {
+                        rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
+                        pushTime = 0;
+
+                    }
+                    else if (pushTime > 0.1f)
+                    {
+                        rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                        pushTime = 0;
+                    }
+                }
+                else if (JumpCount == 1)
+                {
+                    rb.velocity = Vector3.zero;
+                    rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+                }
             }
 
-            if (JumpCount == 1 && Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                rb.velocity = Vector3.zero;
-                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
                 JumpCount++;
-            }
-
-            if (JumpCount == 0 && Input.GetKeyUp(KeyCode.W) && pushTime <= 0.1f)
-            {
-                rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
-                JumpCount++;
-                pushTime = 0;
-            }
-
-            if (JumpCount ==0 && Input.GetKeyUp(KeyCode.W) && pushTime > 0.1f)
-            {
-                rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                JumpCount++;
-                pushTime = 0;
             }
 
             stateInfo = anim.GetCurrentAnimatorStateInfo(0);

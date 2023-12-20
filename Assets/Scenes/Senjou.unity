@@ -5991,7 +5991,7 @@ MonoBehaviour:
   GamesetText: {fileID: 1074249189}
   KBG: 0
   hitStunValue: 0
-  groundCheckRadius: 0.1
+  groundCheckRadius: 0.2
   groundCheckOffsetY: -13.5
   groundCheckDistance: 1
   groundLayers:

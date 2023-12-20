@@ -48,7 +48,7 @@ public class MarioBasicBehavior : MonoBehaviour
     [SerializeField]
     float groundCheckRadius = 0.4f;
     [SerializeField]
-    float groundCheckOffsetY = -0.5f;
+    float groundCheckOffsetY = 0.5f;
     [SerializeField]
     float groundCheckDistance = 0.5f;
     [SerializeField]
@@ -62,6 +62,7 @@ public class MarioBasicBehavior : MonoBehaviour
     bool CheckGroundStatus()
     {
         return Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
+        Debug.Log("接地");
     }
 
     void OnDrawGizmos()
@@ -160,34 +161,52 @@ public class MarioBasicBehavior : MonoBehaviour
                 anim.SetBool("isJumping", false);
             }
 
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //    pushTime += Time.deltaTime;
+
+            //    if (JumpCount == 0)
+            //    {
+            //        if (pushTime <= 0.1f)
+            //        {
+            //            rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
+            //            pushTime = 0;
+
+            //        }
+            //        else if (pushTime > 0.1f)
+            //        {
+            //            rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+            //            pushTime = 0;
+            //        }
+            //    }
+            //    else if (JumpCount == 1)
+            //    {
+            //        rb.velocity = Vector3.zero;
+            //        rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+            //    }
+            //}
+
+
+            //ジャンプ
+
+
             if (Input.GetKey(KeyCode.W))
             {
                 pushTime += Time.deltaTime;
-
-                if (JumpCount == 0)
-                {
-                    if (pushTime <= 0.1f)
-                    {
-                        rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
-                        pushTime = 0;
-
-                    }
-                    else if (pushTime > 0.1f)
-                    {
-                        rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                        pushTime = 0;
-                    }
-                }
-                else if (JumpCount == 1)
-                {
-                    rb.velocity = Vector3.zero;
-                    rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
-                }
             }
 
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyUp(KeyCode.W) && pushTime < 0.1f)
             {
+                rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
                 JumpCount++;
+                pushTime = 0;
+            }
+
+            if (Input.GetKey(KeyCode.W) && pushTime == 0.1f)
+            {
+                rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                JumpCount++;
+                pushTime = 0;
             }
 
             stateInfo = anim.GetCurrentAnimatorStateInfo(0);

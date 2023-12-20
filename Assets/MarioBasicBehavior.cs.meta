@@ -3,7 +3,14 @@ guid: 57d28542c50604ba6a6b9e719283976b
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Receiver1: {fileID: 919132149155446097, guid: 803d3848a85c5429db4114fd57971480, type: 3}
+  - Receiver2: {instanceID: 0}
+  - Receiver3: {instanceID: 0}
+  - HitJudgement: {instanceID: 0}
+  - HP: {instanceID: 0}
+  - ShadowHP: {instanceID: 0}
+  - GamesetText: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

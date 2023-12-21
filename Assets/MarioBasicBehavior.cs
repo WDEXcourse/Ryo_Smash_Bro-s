@@ -46,11 +46,11 @@ public class MarioBasicBehavior : MonoBehaviour
     float Weight;
     float EnemyWeight;
     [SerializeField]
-    float groundCheckRadius = 0.4f;
+    float groundCheckRadius = 2;
     [SerializeField]
-    float groundCheckOffsetY = 0.5f;
+    float groundCheckOffsetY = -12;
     [SerializeField]
-    float groundCheckDistance = 0.5f;
+    float groundCheckDistance = 0;
     [SerializeField]
     LayerMask groundLayers = 0;
     RaycastHit hit;
@@ -61,14 +61,18 @@ public class MarioBasicBehavior : MonoBehaviour
 
     bool CheckGroundStatus()
     {
-        return Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
-        Debug.Log("接地");
+
+        var rayhit= Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance);
+
+        return rayhit;
     }
 
     void OnDrawGizmos()
     {
-        Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.down, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
-        Gizmos.DrawWireSphere(transform.position + groundCheckOffsetY * Vector3.down, groundCheckRadius);
+        Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
+        
+        Gizmos.DrawWireSphere(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius);
+        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down * groundCheckDistance, Color.blue);
     }
 
     // Start is called before the first frame update
@@ -86,7 +90,7 @@ public class MarioBasicBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down * groundCheckDistance, Color.red);
+        //Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down * groundCheckDistance, Color.red);
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -282,6 +286,17 @@ public class MarioBasicBehavior : MonoBehaviour
     private void FixedUpdate()
     {
         grounded = CheckGroundStatus();
+        //Debug.Log("raycast" + hit.collider.name);
+        if (CheckGroundStatus())
+        {
+            Debug.Log("地面に触れている");
+
+        }
+        else
+        {
+            Debug.Log("地面に触れていない");
+        }
+
         rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
         if (isHit == true)
         {

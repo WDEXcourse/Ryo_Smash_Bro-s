@@ -52,7 +52,7 @@ public class MarioAction2 : MonoBehaviour
         anim = GetComponent<Animator>();
         transform.position = startPos;
         HitJudgement.SetActive(false);
-        GamesetText.SetActive(false);
+        //GamesetText.SetActive(false);
         KBG = ((0.1f + 10 * 0.05f) * PlayerHP / EnemyWeight * 1.4f + 18) * 0.01f;
         EnemyWeight = (100 + 98 / 200);
     }

@@ -61,18 +61,18 @@ public class MarioBasicBehavior : MonoBehaviour
 
     bool CheckGroundStatus()
     {
-
-        var rayhit= Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance);
-
+        var rayhit = Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance);
+        Debug.Log("床に触れた" + rayhit);
         return rayhit;
     }
 
     void OnDrawGizmos()
     {
-        Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance, groundLayers, QueryTriggerInteraction.Ignore);
-        
+        var rayhit = Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance);
+        Gizmos.color = new Color(0, 1, 0, 1);
+        Gizmos.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down * groundCheckDistance);
+        Gizmos.color = new Color(1, 0, 0, 1);
         Gizmos.DrawWireSphere(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius);
-        Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down * groundCheckDistance, Color.blue);
     }
 
     // Start is called before the first frame update
@@ -90,7 +90,7 @@ public class MarioBasicBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.DrawRay(transform.position + groundCheckOffsetY * Vector3.up, Vector3.down * groundCheckDistance, Color.red);
+        grounded = CheckGroundStatus();
         hitStunValue = KBG * 0.4f - 1;
         HP.text = PlayerHP.ToString();
         ShadowHP.text = PlayerHP.ToString();
@@ -122,25 +122,25 @@ public class MarioBasicBehavior : MonoBehaviour
             {
                 anim.SetBool("MarioDash", false);
             }
-            //if(grounded == true)
-            //{
-            //     if (Input.GetKeyDown(KeyCode.X))
-            //     {
-            //         anim.SetBool("jub1", true);
-            //         if (Input.GetKeyDown(KeyCode.X) && stateInfo.length < 10)
-            //         {
-            //             anim.SetBool("jub2", true);
-            //         }
-            //         else
-            //         {
-            //             anim.SetBool("jub2", false);
-            //         }
-            //     }
-            //     else
-            //     {
-            //         anim.SetBool("jub1", false);
-            //     }
-            //}
+            if (grounded == true)
+            {
+                if (Input.GetKeyDown(KeyCode.X))
+                {
+                    anim.SetBool("jub1", true);
+                    if (Input.GetKeyDown(KeyCode.X) && stateInfo.length < 10)
+                    {
+                        anim.SetBool("jub2", true);
+                    }
+                    else
+                    {
+                        anim.SetBool("jub2", false);
+                    }
+                }
+                else
+                {
+                    anim.SetBool("jub1", false);
+                }
+            }
 
 
 
@@ -197,19 +197,27 @@ public class MarioBasicBehavior : MonoBehaviour
             if (Input.GetKey(KeyCode.W))
             {
                 pushTime += Time.deltaTime;
+                Debug.Log(pushTime);
             }
 
-            if (Input.GetKeyUp(KeyCode.W) && pushTime < 0.1f)
+            if (Input.GetKeyUp(KeyCode.W) && pushTime < 1 && JumpCount == 0)
             {
                 rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
                 JumpCount++;
                 pushTime = 0;
             }
 
-            if (Input.GetKey(KeyCode.W) && pushTime == 0.1f)
+            if (Input.GetKey(KeyCode.W) && JumpCount == 0)
             {
-                rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                JumpCount++;
+                if(pushTime >= 0.1f)
+                {
+                    rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                    JumpCount++;
+                }
+            }
+
+            if (JumpCount == 1)
+            {
                 pushTime = 0;
             }
 
@@ -270,33 +278,22 @@ public class MarioBasicBehavior : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "MarioJub1Hitbox0" || other.gameObject.tag == "MarioJub1Hitbox1" || other.gameObject.tag == "MarioJub1Hitbox2" || other.gameObject.tag == "MarioJub1Hitbox3")
-        {
-            Debug.Log("弱1ヒット");
-            PlayerHP += 10;
+        //if (other.gameObject.tag == "MarioJub1Hitbox0" || other.gameObject.tag == "MarioJub1Hitbox1" || other.gameObject.tag == "MarioJub1Hitbox2" || other.gameObject.tag == "MarioJub1Hitbox3")
+        //{
+        //    Debug.Log("弱1ヒット");
+        //    PlayerHP += 10;
 
-            KnockBack = new Vector3(KBG * -50000 * Mathf.Cos(Mathf.PI / 6), KBG * -50000 * Mathf.Sin(Mathf.PI / 6) * -1, 0);
+        //    KnockBack = new Vector3(KBG * -50000 * Mathf.Cos(Mathf.PI / 6), KBG * -50000 * Mathf.Sin(Mathf.PI / 6) * -1, 0);
 
-            Debug.Log("KB:" + KnockBack);
-            isHit = true;
-            StartCoroutine("stunTime");
-        }
+        //    Debug.Log("KB:" + KnockBack);
+        //    isHit = true;
+        //    StartCoroutine("stunTime");
+        //}
     }
 
     private void FixedUpdate()
     {
-        grounded = CheckGroundStatus();
         //Debug.Log("raycast" + hit.collider.name);
-        if (CheckGroundStatus())
-        {
-            Debug.Log("地面に触れている");
-
-        }
-        else
-        {
-            Debug.Log("地面に触れていない");
-        }
-
         rb.AddForce(Vector3.down * 9.81f * GravityPower, ForceMode.Acceleration);
         if (isHit == true)
         {
@@ -319,48 +316,48 @@ public class MarioBasicBehavior : MonoBehaviour
 
     private void OnCollisionStay(Collision collision)
     {
-        if (collision.gameObject.tag == "Platform1" && downInput == true)
-        {
-            //transform.position -= transform.up*downPower;
-            Receiver1.SendMessage("IsTrigger");
-            downInput = false;
-        }
+        //if (collision.gameObject.tag == "Platform1" && downInput == true)
+        //{
+        //    //transform.position -= transform.up*downPower;
+        //    Receiver1.SendMessage("IsTrigger");
+        //    downInput = false;
+        //}
 
-        if (collision.gameObject.tag == "Platform2" && downInput == true)
-        {
-            //transform.position -= transform.up * downPower;
-            Receiver2.SendMessage("IsTrigger");
-            downInput = false;
-        }
+        //if (collision.gameObject.tag == "Platform2" && downInput == true)
+        //{
+        //    //transform.position -= transform.up * downPower;
+        //    Receiver2.SendMessage("IsTrigger");
+        //    downInput = false;
+        //}
 
-        if (collision.gameObject.tag == "Platform3" && downInput == true)
-        {
-            //transform.position -= transform.up * downPower;
-            Receiver3.SendMessage("IsTrigger");
-            downInput = false;
-        }
+        //if (collision.gameObject.tag == "Platform3" && downInput == true)
+        //{
+        //    //transform.position -= transform.up * downPower;
+        //    Receiver3.SendMessage("IsTrigger");
+        //    downInput = false;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            anim.SetBool("MarioJub", true);
-        }
-        else
-        {
-            anim.SetBool("MarioJub", false);
-        }
+        //if (Input.GetKeyDown(KeyCode.LeftShift))
+        //{
+        //    anim.SetBool("MarioJub", true);
+        //}
+        //else
+        //{
+        //    anim.SetBool("MarioJub", false);
+        //}
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "LeftEdge" && transform.rotation == Quaternion.Euler(0, -90, 0))
-        {
-            Debug.Log("左端");
-            anim.SetBool("Teeter", true);
-        }
-        else if (other.gameObject.tag == "RightEdge" && transform.rotation == Quaternion.Euler(0, 90, 0))
-        {
-            anim.SetBool("Teeter", true);
-        }
+        //if (other.gameObject.tag == "LeftEdge" && transform.rotation == Quaternion.Euler(0, -90, 0))
+        //{
+        //    Debug.Log("左端");
+        //    anim.SetBool("Teeter", true);
+        //}
+        //else if (other.gameObject.tag == "RightEdge" && transform.rotation == Quaternion.Euler(0, 90, 0))
+        //{
+        //    anim.SetBool("Teeter", true);
+        //}
     }
 
     public void UpPower()

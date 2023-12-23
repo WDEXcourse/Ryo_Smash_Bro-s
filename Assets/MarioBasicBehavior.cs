@@ -156,6 +156,9 @@ public class MarioBasicBehavior : MonoBehaviour
             //}
 
 
+            //ジャンプ
+
+
             if (Input.GetKey(KeyCode.W))
             {
                 anim.SetBool("isJumping", true);
@@ -164,35 +167,6 @@ public class MarioBasicBehavior : MonoBehaviour
             {
                 anim.SetBool("isJumping", false);
             }
-
-            //if (Input.GetKey(KeyCode.W))
-            //{
-            //    pushTime += Time.deltaTime;
-
-            //    if (JumpCount == 0)
-            //    {
-            //        if (pushTime <= 0.1f)
-            //        {
-            //            rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
-            //            pushTime = 0;
-
-            //        }
-            //        else if (pushTime > 0.1f)
-            //        {
-            //            rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-            //            pushTime = 0;
-            //        }
-            //    }
-            //    else if (JumpCount == 1)
-            //    {
-            //        rb.velocity = Vector3.zero;
-            //        rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
-            //    }
-            //}
-
-
-            //ジャンプ
-
 
             if (Input.GetKey(KeyCode.W))
             {
@@ -214,6 +188,13 @@ public class MarioBasicBehavior : MonoBehaviour
                     rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
                     JumpCount++;
                 }
+            }
+
+            if (Input.GetKeyUp(KeyCode.W) && JumpCount == 1)
+            {
+                rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
+                JumpCount++;
+                pushTime = 0;
             }
 
             if (JumpCount == 1)
@@ -250,30 +231,7 @@ public class MarioBasicBehavior : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //if (collision.gameObject.tag == "Ground")
-        //{
-        //    JumpCount = 0;
-        //}
 
-        //if (collision.gameObject.tag == "Edge")
-        //{
-        //    JumpCount = 0;
-        //}
-
-        //if (collision.gameObject.tag == "Platform1")
-        //{
-        //    JumpCount = 0;
-        //}
-
-        //if (collision.gameObject.tag == "Platform2")
-        //{
-        //    JumpCount = 0;
-        //}
-
-        //if (collision.gameObject.tag == "Platform3")
-        //{
-        //    JumpCount = 0;
-        //}
     }
 
     private void OnTriggerEnter(Collider other)

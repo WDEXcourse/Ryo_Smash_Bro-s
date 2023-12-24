@@ -62,7 +62,7 @@ public class MarioBasicBehavior : MonoBehaviour
     bool CheckGroundStatus()
     {
         var rayhit = Physics.SphereCast(transform.position + groundCheckOffsetY * Vector3.up, groundCheckRadius, Vector3.down, out hit, groundCheckDistance);
-        Debug.Log("床に触れた" + rayhit);
+        //Debug.Log("床に触れた" + rayhit);
         return rayhit;
     }
 
@@ -122,61 +122,43 @@ public class MarioBasicBehavior : MonoBehaviour
             {
                 anim.SetBool("MarioDash", false);
             }
-            if (grounded == true)
+
+            if(grounded == false)
             {
                 if (Input.GetKeyDown(KeyCode.X))
                 {
-                    anim.SetBool("jub1", true);
-                    if (Input.GetKeyDown(KeyCode.X) && stateInfo.length < 10)
-                    {
-                        anim.SetBool("jub2", true);
-                    }
-                    else
-                    {
-                        anim.SetBool("jub2", false);
-                    }
-                }
-                else
-                {
-                    anim.SetBool("jub1", false);
+                    anim.SetTrigger("TriggerUpAir");
+                    //UnderAttack = true;
                 }
             }
 
-
-
-            if (Input.GetKeyDown(KeyCode.X) && grounded == false)
+            if (Input.GetKeyDown(KeyCode.Q))
             {
-                anim.SetTrigger("TriggerUpAir");
-                //UnderAttack = true;
+                anim.SetBool("MarioJub", true);
             }
-            //else
-            //{
-            //    anim.SetTrigger("TriggerUpAir");
-            //    //UnderAttack = false;
-            //}
 
 
             //ジャンプ
 
 
-            if (Input.GetKey(KeyCode.W))
-            {
-                anim.SetBool("isJumping", true);
-            }
-            else
-            {
-                anim.SetBool("isJumping", false);
-            }
+            //if (Input.GetKey(KeyCode.W))
+            //{
+            //    anim.SetBool("MarioJump", true);
+            //}
+            //else
+            //{
+            //    anim.SetBool("MarioJump", false);
+            //}
 
             if (Input.GetKey(KeyCode.W))
             {
                 pushTime += Time.deltaTime;
-                Debug.Log(pushTime);
             }
 
             if (Input.GetKeyUp(KeyCode.W) && pushTime < 1 && JumpCount == 0)
             {
                 rb.AddForce(Vector3.up * ShortJumpPower, ForceMode.Impulse);
+                Debug.Log("小ジャンプ");
                 JumpCount++;
                 pushTime = 0;
             }
@@ -186,12 +168,14 @@ public class MarioBasicBehavior : MonoBehaviour
                 if(pushTime >= 0.1f)
                 {
                     rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
+                    Debug.Log("大ジャンプ");
                     JumpCount++;
                 }
             }
 
-            if (Input.GetKeyUp(KeyCode.W) && JumpCount == 1)
+            if (Input.GetKeyDown(KeyCode.W) && JumpCount == 1)
             {
+                rb.velocity = Vector3.zero;
                 rb.AddForce(Vector3.up * AirJumpPower, ForceMode.Impulse);
                 JumpCount++;
                 pushTime = 0;
@@ -202,15 +186,7 @@ public class MarioBasicBehavior : MonoBehaviour
                 pushTime = 0;
             }
 
-            stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-            if (stateInfo.IsName("KnifeAction1"))
-            {
-                HitJudgement.SetActive(true);
-            }
-            else
-            {
-                HitJudgement.SetActive(false);
-            }
+            //stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         }
 
         if (hitStun == true)

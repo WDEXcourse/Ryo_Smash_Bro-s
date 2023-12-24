@@ -11,7 +11,7 @@ public class MarioJubCombo : StateMachineBehaviour          //スマッシュwik
 
     public override void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.Q))
         {
             animator.SetBool("MarioJub", true);
         }
